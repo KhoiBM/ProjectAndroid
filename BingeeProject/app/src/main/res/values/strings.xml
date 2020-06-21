@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">BingeeProject</string>
+    <string name="first_slide_title">Delicious Food</string>
+    <string name="second_slide_title">Order Your Food Now</string>
+    <string name="third_slide_title">Fast Delivery and Free</string>
+    <string name="first_slide_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"</string>
+    <string name="second_slide_desc">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"</string>
+    <string name="third_slide_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"</string>
+
+    <!--Buttons-->
+    <string name="skip_btn">Skip</string>
+    <string name="next_btn">Next</string>
+    <string name="let_get_started">Lets Get Started</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="bin_app_name">Bingee</string>
+    <string name="bin_hint_phonenumber">Phone Number</string>
+    <string name="bin_hint_password">Password</string>
+    <string name="bin_button_go">Go</string>
+    <string name="bin_button_signup">Sign Up</string>
+</resources>

@@ -1,0 +1,53 @@
+{
+	"Users": {
+		"+84387741552":{
+			"name": "Minh Khoi",
+			"password":"12345678",
+			"phone":"+84387741552",
+			"address": "Tay Ninh",
+			"email": "khoibmhe141771@fpt.edu.vn",
+			"gender": "true"			
+		},
+		"+84387741553":{
+			"name": "Khoi Minh",
+			"password":"12345678",
+			"phone":"+84387741553",
+			"address": "Ninh Binh",
+			"email": "khoibmhe1417711@fpt.edu.vn",
+			"gender": "false"			
+		}
+	},
+	"Product":{
+		"1":{
+			"name":"Hamburger",
+			"image":"hamburger",
+			"price": "1",
+			"discount":"0",
+			"menuid":"1"
+		},
+		"2":{
+			"name":"Chicken",
+			"image":"chicken",
+			"price": "2",
+			"discount":"10",
+			"menuid":"2"
+		}
+
+	},
+	"Category":{
+		"1":{
+			"name":"Food",
+			"image":"food.png"
+		},
+		"2":{
+			"name":"Drink",
+			"image":"drink.png"
+		}
+
+	},
+	"Requests":{
+	
+
+	}
+
+}
