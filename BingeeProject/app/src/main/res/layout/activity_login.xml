@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="30dp"
-    tools:context=".Common.LoginActivity">
+    tools:context=".Common.LoginActivity"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,9 @@
         android:clipToPadding="false"
         android:orientation="vertical"
         android:padding="24dp"
-        android:paddingTop="16dp">
+        android:paddingTop="16dp"
+        android:transitionName="transition_goback"
+        >
 
         <!--        <ImageView-->
         <!--            android:id="@+id/signup_back_button"-->
@@ -22,14 +25,14 @@
         <!--            android:padding="5dp"-->
         <!--            android:src="@drawable/ic_back" />-->
 
-
         <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="48dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/ic_logo2" />
+            app:srcCompat="@drawable/ic_logo2"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,14 +48,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/countryCodePicker"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:ccp_autoDetectCountry="true"
-                app:ccp_showFlag="true"
-                app:ccp_showFullName="true"
-                app:ccp_showNameCode="true" />
+<!--            <com.hbb20.CountryCodePicker-->
+<!--                android:id="@+id/countryCodePicker"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                app:ccp_autoDetectCountry="true"-->
+<!--                app:ccp_showFlag="true"-->
+<!--                app:ccp_showFullName="true"-->
+<!--                app:ccp_showNameCode="true" />-->
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -104,7 +107,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:onClick="go"
-                android:text="@string/bin_button_go" />
+                android:text="@string/bin_button_go"
+                />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_signup"
@@ -113,8 +117,10 @@
                 android:layout_height="45dp"
                 android:layout_below="@+id/button_go"
                 android:onClick="signup"
-                android:text="@string/bin_button_signup" />
+                android:text="@string/bin_button_signup"
+                android:transitionName="transition_signup"
 
+                />
             <RelativeLayout
                 android:id="@+id/progressbar"
                 android:layout_width="wrap_content"
@@ -124,16 +130,13 @@
                 android:background="@drawable/whitecircle"
                 android:elevation="8dp"
                 android:visibility="invisible">
-
                 <ProgressBar
                     android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyle"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_centerInParent="true"
-                    />
+                    android:layout_centerInParent="true" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
-
 </ScrollView>

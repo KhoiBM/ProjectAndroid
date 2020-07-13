@@ -28,4 +28,5 @@ public class Category {
     public void setmImage(String mImage) {
         this.mImage = mImage;
     }
+
 }

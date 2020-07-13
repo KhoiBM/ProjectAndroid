@@ -12,8 +12,10 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.prm391.project.bingeeproject.R;
 
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -71,7 +73,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(i);
                     finish();
                 }else{
-                    Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(i);
                     finish();
                 }

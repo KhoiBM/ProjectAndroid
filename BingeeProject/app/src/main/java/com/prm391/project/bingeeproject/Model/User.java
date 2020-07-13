@@ -1,9 +1,12 @@
 package com.prm391.project.bingeeproject.Model;
 
+import java.util.Date;
+
 public class User {
-    private String mName;
+    private String mFullName;
     private String mPassword;
     private String mPhone;
+    private String mDOB;
     private String mAddress;
     private String mEmail;
     private boolean mGender;
@@ -11,21 +14,22 @@ public class User {
     public User() {
     }
 
-    public User(String mName, String mPassword, String mPhone, String mAddress, String mEmail, boolean mGender) {
-        this.mName = mName;
+    public User(String mFullName, String mPassword, String mPhone, String mDOB, String mAddress, String mEmail, boolean mGender) {
+        this.mFullName = mFullName;
         this.mPassword = mPassword;
         this.mPhone = mPhone;
+        this.mDOB = mDOB;
         this.mAddress = mAddress;
         this.mEmail = mEmail;
         this.mGender = mGender;
     }
 
-    public String getmName() {
-        return mName;
+    public String getmFullName() {
+        return mFullName;
     }
 
-    public void setmName(String mName) {
-        this.mName = mName;
+    public void setmFullName(String mFullName) {
+        this.mFullName = mFullName;
     }
 
     public String getmPassword() {
@@ -42,6 +46,14 @@ public class User {
 
     public void setmPhone(String mPhone) {
         this.mPhone = mPhone;
+    }
+
+    public String getmDOB() {
+        return mDOB;
+    }
+
+    public void setmDOB(String mDOB) {
+        this.mDOB = mDOB;
     }
 
     public String getmAddress() {
@@ -67,5 +79,4 @@ public class User {
     public void setmGender(boolean mGender) {
         this.mGender = mGender;
     }
-
 }

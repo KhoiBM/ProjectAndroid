@@ -25,4 +25,22 @@
     <string name="bin_hint_password">Password</string>
     <string name="bin_button_go">Go</string>
     <string name="bin_button_signup">Sign Up</string>
+    <string name="bin_hint_fullname">Full Name</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bin_button_update">Update</string>
+    <string name="bin_hint_address">Address</string>
+    <string name="bin_hint_email">Email</string>
+    <string name="bin_hint_male">Male</string>
+    <string name="bin_hint_female">Female</string>
+    <string name="bin_hint_dob">Date of birth</string>
+    <string name="loading">Loading...</string>
+    <string name="bin_category_title">Title</string>
+    <string name="bin_category_description">Secondary text</string>
+    <string name="bin_product_title">Title</string>
+    <string name="bin_product_description">Secondary text</string>
+    <string name="bin_button_checkout">Checkout</string>
+    <string name="bin_cart">Cart</string>
+    <string name="bin_cart_total">Total:</string>
+    <string name="bin_cart_totalprice">10$</string>
 </resources>

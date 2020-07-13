@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Bingee" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -8,7 +8,7 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
     </style>
-    <style name="SplashTheme" parent="AppTheme">
+    <style name="SplashTheme" parent="Theme.Bingee">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
@@ -37,5 +37,17 @@
 
     <style name="Widget.Bingee.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="Widget.Shrine.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorAccent</item>
+        <item name="android:theme">@style/Theme.Bingee</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Bingee.Toolbar</item>
+        <item name="titleTextColor">@color/white</item>
+    </style>
+    <style name="TextAppearance.Bingee.Toolbar" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">16sp</item>
+
     </style>
 </resources>

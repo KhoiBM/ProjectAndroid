@@ -7,8 +7,6 @@
     <color name="textColorPrimary">#442C2E</color>
     <color name="textColorSecondary">#FFFFFF</color>
     <color name="toolbarIconColor">@color/textColorPrimary</color>
-    <color name="loginPageBackgroundColor">#FFFFFF</color>
-    <color name="productGridBackgroundColor">#FFFFFF</color>
     <color name="textInputOutLineColor">#3700B3</color>
     <color name="white">#FFFFFF</color>
 </resources>

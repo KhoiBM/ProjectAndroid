@@ -1,24 +1,24 @@
 package com.prm391.project.bingeeproject.Model;
 
 public class Product {
+//    private int mID;
     private String mName;
     private String mImage;
     private String mDescription;
     private Double mPrice;
-    private String mMenuID;
-    private  String mDiscount;
+    private String mCategoryID;
 
     public Product() {
     }
 
-    public Product(String mName, String mImage, String mDescription, Double mPrice, String mMenuID, String mDiscount) {
+    public Product(String mName, String mImage, String mDescription, Double mPrice, String mCategoryID) {
         this.mName = mName;
         this.mImage = mImage;
         this.mDescription = mDescription;
         this.mPrice = mPrice;
-        this.mMenuID = mMenuID;
-        this.mDiscount = mDiscount;
+        this.mCategoryID = mCategoryID;
     }
+
 
     public String getmName() {
         return mName;
@@ -52,19 +52,11 @@ public class Product {
         this.mPrice = mPrice;
     }
 
-    public String getmMenuID() {
-        return mMenuID;
+    public String getmCategoryID() {
+        return mCategoryID;
     }
 
-    public void setmMenuID(String mMenuID) {
-        this.mMenuID = mMenuID;
-    }
-
-    public String getmDiscount() {
-        return mDiscount;
-    }
-
-    public void setmDiscount(String mDiscount) {
-        this.mDiscount = mDiscount;
+    public void setmCategoryID(String mCategoryID) {
+        this.mCategoryID = mCategoryID;
     }
 }
