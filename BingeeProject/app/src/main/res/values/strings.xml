@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">BingeeProject</string>
-    <string name="first_slide_title">Delicious Food</string>
-    <string name="second_slide_title">Order Your Food Now</string>
-    <string name="third_slide_title">Fast Delivery and Free</string>
+    <string name="first_slide_title">Essential baking ingredients</string>
+    <string name="second_slide_title">Infuse personality with modern furniture</string>
+    <string name="third_slide_title">Fast Delivery and Freeship</string>
     <string name="first_slide_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"</string>
     <string name="second_slide_desc">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"</string>
     <string name="third_slide_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"</string>
@@ -38,9 +38,19 @@
     <string name="bin_category_title">Title</string>
     <string name="bin_category_description">Secondary text</string>
     <string name="bin_product_title">Title</string>
-    <string name="bin_product_description">Secondary text</string>
+    <string name="bin_product_description">Description text</string>
     <string name="bin_button_checkout">Checkout</string>
     <string name="bin_cart">Cart</string>
     <string name="bin_cart_total">Total:</string>
-    <string name="bin_cart_totalprice">10$</string>
+    <string name="bin_cart_totalprice">0 $</string>
+    <string name="bin_product_price">Just 100 $</string>
+    <string name="action_add_to_cart">Add To Cart</string>
+    <string name="action_buy_now">Buy Now</string>
+    <string name="bin_hint_comment">Enter your comment here</string>
+    <string name="action_submit">Submit</string>
+    <string name="search_title">Search</string>
+    <string name="cart_title">Cart</string>
+    <string name="action_delete_item">Delete</string>
+    <string name="bin_item_price">100 $</string>
+    <string name="action_clean_cart">Clean Cart</string>
 </resources>

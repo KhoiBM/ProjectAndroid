@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -37,11 +40,7 @@ import com.prm391.project.bingeeproject.Model.Category;
 import com.prm391.project.bingeeproject.Model.Product;
 import com.prm391.project.bingeeproject.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProductListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ProductListFragment extends Fragment {
 
 
@@ -65,6 +64,8 @@ public class ProductListFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance("gs://bingee-358c7.appspot.com");
         storageRef = storage.getReference("product");
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -86,12 +87,12 @@ public class ProductListFragment extends Fragment {
         int largePadding = getResources().getDimensionPixelSize(R.dimen.bin_category_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.bin_category_grid_spacing_small);
         recyclerView.addItemDecoration(new GridItemDecoration(largePadding, smallPadding));
-        loadProduct();
+        loadListProduct();
 
         return view;
     }
 
-    private void loadProduct() {
+    private void loadListProduct() {
         FirebaseRecyclerOptions<Product> options =
                 new FirebaseRecyclerOptions.Builder<Product>()
                         .setQuery(product, Product.class)
@@ -127,7 +128,7 @@ public class ProductListFragment extends Fragment {
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(getContext(), "productName: " + clickItem.getmName() + "/ keyProduct" + adapter.getRef(position).getKey(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "productName: " + clickItem.getmName() + "/ keyProduct" + adapter.getRef(position).getKey(), Toast.LENGTH_SHORT).show();
                         Bundle bundle = new Bundle();
                         bundle.putString("productID", adapter.getRef(position).getKey());
                         ProductDetailFragment productDetailFragment = new ProductDetailFragment();
@@ -169,5 +170,22 @@ public class ProductListFragment extends Fragment {
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
         }
+    }
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.bin_toolbar_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                break;
+            case R.id.shopping_cart:
+                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), true);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

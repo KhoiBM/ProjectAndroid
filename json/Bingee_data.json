@@ -1,0 +1,320 @@
+{
+	"Users": {
+		"0387741552":{
+			"mFullName": "Minh Khoi",
+			"mPassword":"12345678",
+			"mPhone":"0387741552",
+			"mDOB":"05/06/1998",
+			"mAddress": "Tay Ninh",
+			"mEmail": "khoibmhe141771@fpt.edu.vn",
+			"mGender": true
+		},
+		"0387741553":{
+			"mFullName": "Minh Khoi",
+			"mPassword":"12345678",
+			"mPhone":"0387741553",
+			"mDOB":"05/06/1998",
+			"mAddress": "Tay Ninh",
+			"mEmail": "khoibmhe141771@fpt.edu.vn",
+			"mGender": true
+		},
+		"0834116999":{
+			"mFullName": "Duc Chien",
+			"mPassword":"12345678",
+			"mPhone":"0834116999",
+			"mDOB":"16/09/1999",
+			"mAddress": "Nam Dinh",
+			"mEmail": "chientdhe130327@fpt.edu.vn",
+			"mGender": true
+		}
+	},
+	"Product":{
+		"1":{
+			"mName":"All purpose Flour",
+			"mImage":"1_Flour_Maida_1.jpg",
+			"mDescription":"The heart of most baking recipes is flour, popular as all-purpose flour, and locally known as maida. Available as branded packages and sold loose by the kilo in kirana stores and supermarkets. Maida is made by the process of skimming the bran and husk off the wheat flour, taking off the fibre content, leaving you with a fine, smooth flour. Using good quality maida is a must, as it is an important ingredient in your recipe. Many times, maida/all-purpose flour is confused for self-raising flour. While maida is just the flour all by itself, self-raising flour is mixed along with raising agents like baking powder and a dash of salt added to it. Like we all know following the recipe diligently is the key, as baking is a science. Use all-purpose flour as mentioned in your recipes.",
+			"mPrice": 123,
+			"mCategoryID":"1"
+		},
+		"2":{
+			"mName":"Butter",
+			"mImage":"2_Butter_1.jpg",
+			"mDescription":"Adding richness and texture to our soft, buttery, flaky bakes, be it cakes or pastries like – shortcrust pastries, butter is what brings it all together. Store bought butter works best, be it Amul butter or President butter is great to use. Although unsalted butter works best for bakes, using salted butter doesn’t hurt. The salt present in the butter when added to the recipe, brings out the flavours beautifully.",
+			"mPrice": 234,
+			"mCategoryID":"1"
+		},
+		"3":{
+			"mName":"Oil",
+			"mImage":"3_Oil_1.jpg",
+			"mDescription":"Oil is the used many a times, in place of butter, to replace the fat content in the recipe. Oil is used in cakes and sponges, that is light, due to the eggs resent in it, and which don’t want to be pulled down by the heaviness of the butter",
+			"mPrice": 23,
+			"mCategoryID":"1"
+		},
+		"4":{
+			"mName":"Castor Sugar",
+			"mImage":"4_Castor_Sugar_1.jpg",
+			"mDescription":"Superfine processed sugar, that has finer granules, works well when combined with butter or eggs. The superfine texture helps give you your desired texture required for the recipe, when compared to the regular sugar crystals that don’t melt easily ruining the composition of the recipe.",
+			"mPrice": 32,
+			"mCategoryID":"1"
+		},
+		"5":{
+			"mName":"Brown Sugar",
+			"mImage":"5_Brown_Sugar_1.jpg",
+			"mDescription":"Sugar crystals that are less refined and still have a coating of dark molasses on them is essentially brown sugar. It is best used in tea cakes and cookies, that taste earthy and rustic with the brown sugar flavour and texture.",
+			"mPrice": 54,
+			"mCategoryID":"1"
+		},
+		"6":{
+			"mName":"Icing Sugar",
+			"mImage":"6_Icing_Sugar_1.jpg",
+			"mDescription":"Icing sugar is a mixture of powdered sugar along with some cornflour. It is also known as confectioners sugar.  Icing sugar and sugar are often mistaken for each other and can't always be used interchangeably. Icing sugar is used in making butter creams, which help give the frosting a good body and many a times used in cookies, to add to the texture of a crispy- crunchy cookie. ",
+			"mPrice": 65,
+			"mCategoryID":"1"
+		},
+		"7":{
+			"mName":"Cocoa powder",
+			"mImage":"7_Cocoa_Powder_1.jpg",
+			"mDescription":"A by-product in the process of extracting all the essential elements of a cacao pod, cocoa powder is the last extract of the pod. Cocoa powder is bitter in taste, yet adds flavour and colour to the bake. Available in two variants, light cocoa powder and dark cocoa powder, the only difference is the tint of the cocoa- light or dark, use it based on the recipe you are making and the end result you are looking for. Hershey’s, Cadbury’s are good brands to use.",
+			"mPrice": 34.99,
+			"mCategoryID":"1"
+		},
+		"8":{
+			"mName":"Chocolate",
+			"mImage":"8_chocolate_1.jpg",
+			"mDescription":"An oh so versatile ingredient, chocolate is used in various forms, chocolate chips, chocolate chunks, melted chocolate used in cookies, cakes, pies, tarts. There are two major variants of chocolate: - Compound, is where the cooking chocolate bar is made using oil, as the fat content. - Couverture, is made used pure cocoa butter, making it a complete package of pure edible chocolate made from the cacao pod.s",
+			"mPrice": 34.99,
+			"mCategoryID":"1"
+		},
+		"9":{
+			"mName":"Thick Heavy Cream/Cooking cream",
+			"mImage":"9_Fresh_Cream_1.jpg",
+			"mDescription":"Rich cooking cream, with high-fat content is required to bring out the best from the recipe in which cream is used. Cooking cream is different from whipping cream. Cooking cream is a dairy-based product with 25% of fat. Amul cream is a popular brand that holds good in almost all recipes. Used in cheesecakes, custards, ganache and the like.Whipping Cream is usually a non-dairy one, where the cream is essentially made of a soy base. The fat content of the whipping cream used should be more than 30% to give you the fluffy whipped cream. Whipping cream is used to frost cakes, used in eggless desserts and as toppings to serve some of the desserts. This cream is usually a non-dairy one, where the cream is essentially made of a soy base. The fat content of the whipping cream used should be more than 30% to give you the fluffy whipped cream. Whipping cream is used to frost cakes, used in eggless desserts and as toppings to serve some of the desserts.",
+			"mPrice": 22.99,
+			"mCategoryID":"1"
+		},
+		"10":{
+			"mName":"Milk",
+			"mImage":"10_Milk_1.jpg",
+			"mDescription":"The liquid ingredient, that gives you the perfect consistency to your recipe, like that of cake batters or brings moisture to the dish like that of short crust pastry. Using whole milk for baking is always a good idea. Milk is also used to wash breads and pies instead of eggs, for eggless recipes.",
+			"mPrice": 12.99,
+			"mCategoryID":"1"
+		},
+		"11":{
+			"mName":"Yogurt/ Butter Milk",
+			"mImage":"11_Curd_1.jpg",
+			"mDescription":"Yogurt is many a times used as a substitute for eggs in a particular recipe to make an eggless version. It is also added to baking recipes, to bring up the level of acidity required in a recipe to react with the baking soda for leavening. Yogurt and buttermilk make the bakes moist, and tender. It maintains the moisture level even after the goods are baked. They enhance the texture of the bakes, giving it a lovely velvety mouthfeel. ",
+			"mPrice": 100.99,
+			"mCategoryID":"1"
+		},
+		"12":{
+			"mName":"Condensed Milk",
+			"mImage":"12_Condensed_Milk_1.jpg",
+			"mDescription":"Whole milk, reduced and sweetened, Condensed milk, is absolutely thick and yummy, that is available in tins, popular from the brands called Nestle Milkmaid and Amul Mithaimate. It is used to sweetener recipes, as well as improvise on the texture. Many times, it is used as a substitute in eggless recipes.",
+			"mPrice": 111.99,
+			"mCategoryID":"1"
+		},
+		"13":{
+			"mName":"Eggs",
+			"mImage":"13_Eggs_1.jpg",
+			"mDescription":"Natural raising agent, eggs not only add volume to the recipe, the yolks add richness to the recipe. Its always a better idea to use pasteurized packaged eggs, as they are better in quality and enhance your product.",
+			"mPrice": 23.99,
+			"mCategoryID":"1"
+		},
+		"14":{
+			"mName":"Flax meal egg replacer",
+			"mImage":"14_Flaxseed_Egg_Replace_for_Vegan_Eggless_Baking_1_2.jpg",
+			"mDescription":"An alternative to eggs, to make your recipes vegetarian or vegan. This healthy replacement, ensures the recipe turns out just as well as it would with eggs. Flax seeds are ground long with water in a predetermined proportion, rested and used in the recipe. Things couldn’t get easier than this.",
+			"mPrice": 95.00,
+			"mCategoryID":"1"
+		},
+		"15":{
+			"mName":"Baking Powder and Baking Soda",
+			"mImage":"15_Baking_Powder_1.jpg",
+			"mDescription":"They are both leavening agents, while baking soda is just baking soda by itself, baking powder has baking soda and cream of tartar mixed in it. They both have unique roles and are used differently in different recipes.",
+			"mPrice": 23,
+			"mCategoryID":"1"
+		},
+		"16":{
+			"mName":"Salt",
+			"mImage":"16_IMG_3429.jpg",
+			"mDescription":"Salt is added to baking recipes, to enhance the other flavours present in the recipes. Salt helps balance the sweetness in cake batters or cookie doughs. A pinch of it is all you need in sweet bakes. In breads, and savoury bakes, salt is not just added for taste but it also helps control the rate at which the yeast grows when combined with flour in a recipe.",
+			"mPrice": 64,
+			"mCategoryID":"1"
+		},
+		"17":{
+			"mName":"Vanilla Extracts/ Essences",
+			"mImage":"17_Vanila_Spices_Orange_Flavouring_Agents_1.jpg",
+			"mDescription":"Various kinds of flavouring agents are used in baking, from, the most popular one being Vanilla Essence, and other agents like Extract, which is often a pure extract from the fresh ingredient. Other flavouring includes, fresh lemon zest or orange zest. Whole spices, lend great aroma to the dish, like cinnamon, star anise, nutmeg to name a few. ",
+			"mPrice": 66,
+			"mCategoryID":"1"
+		},
+		"18":{
+			"mName":"Measuring Cups",
+			"mImage":"1_Measuring_Cups.jpg",
+			"mDescription":"Baking is all about precision, so having a full set of measuring cups and spoons on hand is a must. Don’t think you can get by with just one type of measuring cup—you’ll need both dry and wet measuring cups to accurately measure all your ingredients for pretty much any baking recipe. Keep these tools in an easy-to-reach spot, because you’ll use them all the time.",
+			"mPrice": 123,
+			"mCategoryID":"2"
+		},
+		"19":{
+			"mName":"Wooden Spoon",
+			"mImage":"2_Wooden_Spoon.jpg",
+			"mDescription":"One wooden spoon is enough, but this tool is so handy, it can sometimes be helpful to have a couple around. Wooden spoons are great for all kinds of stirring because they’re so sturdy (you’ll be able to use them with even the thickest, heaviest doughs). Just remember to hand-wash them when you’re done so they don’t end up cracked.",
+			"mPrice": 211,
+			"mCategoryID":"2"
+		},
+		"20":{
+			"mName":"Rubber Spatula/Scraper",
+			"mImage":"3_Rubber_Spatula.jpg",
+			"mDescription":"We’re willing to bet you reach for your rubber scraper more often than you think. This tool is ideal for scraping the last bit of batter or dough out of a pan or for scraping all the nooks and crannies of a jar. They’re also super handy for folding together wet and dry ingredients. Just keep in mind that silicone scrapers will stand up to high heat better than rubber.",
+			"mPrice": 233,
+			"mCategoryID":"2"
+		},
+		"21":{
+			"mName":"Spatula/Metal Turner",
+			"mImage":"4_Metal_Spatula.jpg",
+			"mDescription":"When you need to transfer fresh-out-of-the-oven cookies to a cooling rack or serve a piece of cake from a 9x13 pan, there’s no tool better than a good old spatula. Having one with a thin metal blade can be especially handy—it’ll be flexible enough to easily slide under anything you’re moving without squishing the dough or crumbling your cookies.",
+			"mPrice": 254,
+			"mCategoryID":"2"
+		},
+		"22":{
+			"mName":"Pastry Brush",
+			"mImage":"5_Pastry_Brush.jpg",
+			"mDescription":"This handy tool has more uses than you realized. It can be used to grease a pan before pouring in cake batter, to coat dough with melted butter or egg wash, or to “paint” milk on top of a piecrust. Especially if you’re a frequent baker, this is a must-have!",
+			"mPrice": 321,
+			"mCategoryID":"2"
+		},
+		"23":{
+			"mName":"Whisk",
+			"mImage":"6_Whisk.jpg",
+			"mDescription":"Sure, you can use a wire whisk to beat together a few eggs, but it’s handy for other things too. In particular, it’s one of the best ways to thoroughly mix together dry ingredients and is also great for stirring together a homemade custard.",
+			"mPrice": 311,
+			"mCategoryID":"2"
+		},
+		"24":{
+			"mName":"Kitchen Scissors",
+			"mImage":"7_Kitchen_Scissors.jpg",
+			"mDescription":"Whenever we’re making a recipe, baking or otherwise, we always our have our kitchen shears handy. They can be useful in so many different ways: Snipping fresh herbs, cutting parchment to fit a pan, and even just opening stubborn packages and containers.",
+			"mPrice": 300,
+			"mCategoryID":"2"
+		},
+		"25":{
+			"mName":"Rolling Pin",
+			"mImage":"8_Rolling_Pin.jpg",
+			"mDescription":"Rolling pins are definitely the most useful for rolling out piecrusts, cookie dough, and puff pastry, but there are other ways you can put this tool to work in your kitchen. For example, if you don’t have a food processor and need to crush cookies, chips, or crackers for a recipe, just put them in a sealable bag, then use your rolling pin to smash them to pieces.",
+			"mPrice": 450,
+			"mCategoryID":"2"
+		},
+		"26":{
+			"mName":"Fine-Mesh Sieve",
+			"mImage":"9_Fine_Mesh_Siev.jpg",
+			"mDescription":"You can put a sieve to work in a lot of different ways. For bakers, it’s probably the most useful for sifting dry ingredients or adding a dusting of powdered sugar to a finished pan of brownies or cookies. It also comes in handy for draining wet ingredients (especially small ones,like quinoa, that would slip through a regular colander).",
+			"mPrice": 555,
+			"mCategoryID":"2"
+		},
+		"27":{
+			"mName":"Chef's Knife",
+			"mImage":"10_Chef_Knife.jpg",
+			"mDescription":"If you have only one knife in your whole kitchen, make it this one. This all-purpose knife is great for slicing, dicing, chopping, and mincing just about any ingredient your recipe calls for.",
+			"mPrice": 666,
+			"mCategoryID":"2"
+		},
+		"28":{
+			"mName":"Paring Knife",
+			"mImage":"11_Paring_Knife.jpg",
+			"mDescription":"Yes, make sure you have this smallest knife in your drawer. It’s great for peeling and coring foods like apples, so you’ll need one on hand—especially if you ever make an apple pie. It’s also handy for cutting up other fruits and veggies, and for more delicate work that your chef’s knife is too big for.",
+			"mPrice": 210,
+			"mCategoryID":"2"
+		},
+		"29":{
+			"mName":"Rectangular Baking Pan",
+			"mImage":"12_Rectangular_Baking_Pan.jpg",
+			"mDescription":"A regular baking pan (13x9x2 inches) is a definite must-have. You can use it for so many sweet things—cakes, brownies, cookie bars—and, of course, it has a few savory uses as well. If you pick only one baking pan to stock your kitchen with, make it this one.",
+			"mPrice": 150,
+			"mCategoryID":"2"
+		},
+		"30":{
+			"mName":"Round Cake Pan",
+			"mImage":"13_Round_Cake_Pan.jpg",
+			"mDescription":"Really, you should have two of these on hand, because you’ll need more than one to make a stunning, towering layer cake. Round cake pans come in 8-inch and 9-inch diameters, but most layer cake recipes will work with either size (just make sure you have two of the same size).",
+			"mPrice": 150,
+			"mCategoryID":"2"
+		},
+		"31":{
+			"mName":"Loaf Pan",
+			"mImage":"14_Loaf_Pan.jpg",
+			"mDescription":"Banana bread, pumpkin bread, zucchini bread—all of our favorite homemade bread recipes call for a loaf pan. If you want to bake your own yeast bread, too, it’ll pay off to have two of these pans in your cupboard.",
+			"mPrice": 150,
+			"mCategoryID":"2"
+		},
+		"32":{
+			"mName":"Pie Plate",
+			"mImage":"15_Pie_Plate.jpg",
+			"mDescription":"Yes, the most obvious use for a pie plate is baking your own homemade pies, but there are a lot of other desserts that make this pan useful to have around. Also, you can make savory pies like meatball pie and taco pie for dinner, plus some frozen icebox pies as well.",
+			"mPrice": 105.99,
+			"mCategoryID":"2"
+		},
+		"33":{
+			"mName":"Square Baking Pan",
+			"mImage":"16_Square_Baking_Pan.jpg",
+			"mDescription":"You don’t always need to make a huge pan of brownies, and when you just want a small batch, you’ll need a square baking pan. Cookie bars, cakes, brownies, and corn bread are just a few of the baked goods you can serve up from an 8x8 or 9x9 pan.",
+			"mPrice": 120,
+			"mCategoryID":"2"
+		},
+		"34":{
+			"mName":"Wire Rack",
+			"mImage":"17_Wire_Rack.jpg",
+			"mDescription":"No one wants soggy, overbaked cookies and cakes for dessert, so make sure you’ve got a wire rack on hand in your kitchen. This handy tool allows air to circulate around baked goods as they cool, so they’ll taste just as great at room temperature as they did fresh out of the oven.",
+			"mPrice": 142,
+			"mCategoryID":"2"
+		},
+		"35":{
+			"mName":"Muffin Pan",
+			"mImage":"18_Muffin_Pan.jpg",
+			"mDescription":"Use this pan to show up at your next brunch with a tray of freshly baked muffins, or use it to make cupcakes for your next birthday celebration. Plus, you can use a muffin pan for lots of different savory recipes too, like meatballs, pizza cups, and mini meat loaves.",
+			"mPrice": 112,
+			"mCategoryID":"2"
+		},
+		"36":{
+			"mName":"Cookie Sheet",
+			"mImage":"19_Cookie_Sheet.jpg",
+			"mDescription":"You definitely need at least one cookie sheet in your kitchen, and you’ll probably benefit from having two. Of course, this pan is essential for baking pretty much any kind of cookie, but you can use it for tons of other sheet pan dinner recipes, too.",
+			"mPrice": 50,
+			"mCategoryID":"2"
+		},
+		"37":{
+			"mName":"Hand Mixer/Stand Mixer",
+			"mImage":"20_Hand_Mixer.jpg",
+			"mDescription":"While you don’t need to go all-out on a fancy stand mixer, you do need at least a hand mixer in your arsenal of baking tools. It makes mixing up doughs and batters much easier and quicker, and it’s by far the best way to mix ingredients into a thick, stiff cookie dough without tiring out your arm.",
+			"mPrice": 1000,
+			"mCategoryID":"2"
+		},
+		"38":{
+			"mName":"Parchment Paper",
+			"mImage":"21_Parchment_Paper.jpg",
+			"mDescription":"If you haven’t been baking with parchment paper, start now! Spreading a sheet over your pan before you start baking cookies will make clean-up much easier and prevent your baked goods from sticking to the pan. You can also opt for pricier reusable silicone baking mats, but parchment paper is more affordable and will work just as well.",
+			"mPrice": 40,
+			"mCategoryID":"2"
+		},
+		"39":{
+			"mName":"Pastry Blender",
+			"mImage":"22_Pastry_Blender.jpg",
+			"mDescription":"If you’re big on baking pies and biscuits, this is a handy tool to have—it’ll make cutting cold butter or shortening into flour much easier. But if you don’t have one in your kitchen, you can use two butter knives instead. Just move the knives in a crisscross motion to cut the butter into the flour.",
+			"mPrice": 100,
+			"mCategoryID":"2"
+		}
+},
+"Category":{
+	"1":{
+		"mName":"Baking Ingredients",
+		"mImage":"ingredientsbaking.jpg"
+	},
+	"2":{
+		"mName":"Furniture",
+		"mImage":"furniture.jpg"
+	}
+
+},
+"Requests":{
+}
+
+}

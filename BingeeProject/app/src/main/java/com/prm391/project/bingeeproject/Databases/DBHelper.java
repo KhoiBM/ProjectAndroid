@@ -16,9 +16,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     + "id integer not null primary key autoincrement,"
                     + "productId text,"
                     + "productName text,"
-                    + "quantity text,"
-                    + "price real,"
-                    + "discount integer"
+                    + "quantity integer,"
+                    + "price real"
                     + ")";
 
     public DBHelper(Context context, String dbName, int version) {

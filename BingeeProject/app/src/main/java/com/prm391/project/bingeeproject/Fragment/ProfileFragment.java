@@ -2,10 +2,15 @@ package com.prm391.project.bingeeproject.Fragment;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -63,6 +68,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         password = "12345678";
         mDatabase = FirebaseDatabase.getInstance();
         table_user = mDatabase.getReference("Users");
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -73,6 +80,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mBinding = FragmentProfileBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
 
+        setUpToolbar(view);
+
         phoneNumber = mBinding.textInputPhone;
         fullName = mBinding.textInputFullname;
         dob = mBinding.textInputDob;
@@ -82,9 +91,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         rbtnFemale = mBinding.rbtnFemale;
 //        countryCodePicker = mBinding.countryCodePicker;
         update = mBinding.btnUpdateProfile;
-        goback = mBinding.profileBackButton;
+//        goback = mBinding.profileBackButton;
+
         update.setOnClickListener(this);
-        goback.setOnClickListener(this);
+//        goback.setOnClickListener(this);
 
         loadingDialog = new LoadingDialog(getActivity());
         loadingDialog.startLoadingDialog();
@@ -173,7 +183,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                     } else {
 //                        progressbar.setVisibility(View.GONE);
-                        loadingDialog.dismissDialog();
                         Snackbar.make(view, "Please login again to update because password not match!", Snackbar.LENGTH_SHORT)
                                 .setAction("No action", null)
                                 .show();
@@ -286,13 +295,38 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_update_profile:
                 update(v);
                 break;
-            case R.id.profile_back_button:
-                goBack(v);
-                break;
+//            case R.id.profile_back_button:
+//                goBack(v);
+//                break;
         }
     }
 
     private void goBack(View v) {
         ((NavigationHost) getActivity()).navigateTo(new HomeFragment(), true);
     }
+    private void setUpToolbar(View view) {
+        Toolbar toolbar = view.findViewById(R.id.app_bar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity != null) {
+            activity.setSupportActionBar(toolbar);
+        }
+    }
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.bin_toolbar_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                break;
+            case R.id.shopping_cart:
+                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), true);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

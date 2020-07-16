@@ -18,9 +18,7 @@
         android:padding="24dp"
         android:paddingTop="16dp"
         android:layout_gravity=""
-        android:transitionName="transition_signup"
-
-        >
+        android:transitionName="transition_signup">
 
         <ImageView
             android:id="@+id/signup_back_button"
@@ -29,7 +27,6 @@
             android:onClick="goBack"
             android:padding="5dp"
             android:src="@drawable/ic_back"
-            android:transitionName="transition_goback"
             />
 
 
@@ -120,8 +117,8 @@
                 android:layout_alignParentRight="true"
                 android:onClick="signup"
                 android:text="@string/bin_button_signup"
-
-              />
+                android:backgroundTint="@color/colorPrimary"
+  />
 
 
             <RelativeLayout

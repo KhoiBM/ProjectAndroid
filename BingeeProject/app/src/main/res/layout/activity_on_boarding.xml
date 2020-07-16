@@ -9,8 +9,8 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slider_onboarding"
         android:layout_width="match_parent"
-        android:layout_height="480dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="76dp"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

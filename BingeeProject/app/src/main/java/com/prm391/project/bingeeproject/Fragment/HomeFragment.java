@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -54,10 +58,14 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         loadingDialog = new LoadingDialog(getActivity());
         loadingDialog.startLoadingDialog();
+
         storage = FirebaseStorage.getInstance("gs://bingee-358c7.appspot.com");
         storageRef = storage.getReference("category");
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -66,17 +74,21 @@ public class HomeFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
         setUpToolbar(view);
 
         mDatabase = FirebaseDatabase.getInstance();
         categoryRef = mDatabase.getReference().child("Category");
+
         recyclerView = view.findViewById(R.id.recycler_view_category);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false));
         int largePadding = getResources().getDimensionPixelSize(R.dimen.bin_category_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.bin_category_grid_spacing_small);
         recyclerView.addItemDecoration(new GridItemDecoration(largePadding, smallPadding));
+
         loadCategory();
+
         return view;
     }
 
@@ -123,7 +135,7 @@ public class HomeFragment extends Fragment {
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(getContext(), "categoryName: " + clickItem.getmName() + "/ keyCategory" + adapter.getRef(position).getKey(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "categoryName: " + clickItem.getmName() + "/ keyCategory" + adapter.getRef(position).getKey(), Toast.LENGTH_SHORT).show();
                         Bundle bundle = new Bundle();
                         bundle.putString("categoryID", adapter.getRef(position).getKey());
                         ProductListFragment productListFragment = new ProductListFragment();
@@ -157,5 +169,22 @@ public class HomeFragment extends Fragment {
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
         }
+    }
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.bin_toolbar_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                break;
+            case R.id.shopping_cart:
+                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), true);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

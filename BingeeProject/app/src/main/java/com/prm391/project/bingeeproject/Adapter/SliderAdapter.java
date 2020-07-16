@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.google.android.material.card.MaterialCardView;
 import com.prm391.project.bingeeproject.R;
 import com.prm391.project.bingeeproject.databinding.SlidersLayoutBinding;
 
@@ -21,9 +22,9 @@ public class SliderAdapter extends PagerAdapter {
     LayoutInflater layoutInflater;
     private SlidersLayoutBinding mBinding;
     int images[]={
-            R.drawable.food_delicious,
-            R.drawable.order_food,
-            R.drawable.delivery
+            R.drawable.essential_baking_ingredients,
+            R.drawable.pizzastein3,
+            R.drawable.takeaway_pana
     };
     int headings[]={
             R.string.first_slide_title,
@@ -46,7 +47,7 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == (ConstraintLayout) object;
+        return view == (MaterialCardView) object;
     }
 
     @NonNull
@@ -70,6 +71,6 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((ConstraintLayout) object);
+        container.removeView((MaterialCardView) object);
     }
 }

@@ -38,7 +38,7 @@
                 android:id="@+id/product_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/bin_product_description"
+                android:text="@string/bin_product_price"
                 android:gravity="center"
                 android:textAppearance="?attr/textAppearanceBody2" />
         </LinearLayout>
