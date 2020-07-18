@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
 import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.FragmentProfileBinding;
 
@@ -78,6 +79,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         View view = mBinding.getRoot();
 
         setUpToolbar(view);
+
+        HandleSearchComponent.handleSearchView(view,getActivity());
+
 
         phoneNumber = mBinding.textInputPhone;
         fullName = mBinding.textInputFullname;
@@ -350,14 +354,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.search:
-                break;
-            case R.id.shopping_cart:
-                Bundle bundle = new Bundle();
-                ((NavigationHost) getActivity()).navigateTo(new CartFragment(),bundle, true);
-                break;
-        }
+        Utils.handleOnOptionsItemSelected(item,getActivity());
         return super.onOptionsItemSelected(item);
     }
 

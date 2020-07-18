@@ -5,7 +5,8 @@
         android:id="@+id/search"
         android:icon="@drawable/ic_search"
         android:title="@string/search_title"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        />
     <item
         android:id="@+id/shopping_cart"
         android:icon="@drawable/ic_shopping_cart_white"

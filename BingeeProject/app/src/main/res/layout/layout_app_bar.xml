@@ -11,5 +11,6 @@
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/bin_menu"
         app:title="@string/bin_app_name" />
+    <include layout="@layout/widget_search_bar" />
 
 </com.google.android.material.appbar.AppBarLayout>

@@ -41,6 +41,7 @@ import com.prm391.project.bingeeproject.Model.Order;
 import com.prm391.project.bingeeproject.Model.Request;
 import com.prm391.project.bingeeproject.Model.User;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
 import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.FragmentCheckoutBinding;
 
@@ -97,6 +98,9 @@ public class CheckoutFragment extends Fragment implements View.OnClickListener {
         View view = mBinding.getRoot();
 
         setUpToolbar(view);
+
+        HandleSearchComponent.handleSearchView(view,getActivity());
+
 
         totalPrice = mBinding.cartTotalPrice;
         snackbarLayout = mBinding.snackBarCart;
@@ -222,14 +226,7 @@ public class CheckoutFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.search:
-                break;
-            case R.id.shopping_cart:
-                Bundle bundle = new Bundle();
-                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), bundle, true);
-                break;
-        }
+        Utils.handleOnOptionsItemSelected(item,getActivity());
         return super.onOptionsItemSelected(item);
     }
 

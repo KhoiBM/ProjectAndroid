@@ -6,14 +6,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.provider.Settings;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.prm391.project.bingeeproject.Common.LoginActivity;
+import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Fragment.CartFragment;
 import com.prm391.project.bingeeproject.Model.User;
+import com.prm391.project.bingeeproject.R;
 
 public class Utils {
 
@@ -52,6 +59,17 @@ public class Utils {
                 .setAction("No action", null)
                 .show();
 
+    }
+    public static void handleOnOptionsItemSelected(MenuItem item, FragmentActivity activity){
+        switch (item.getItemId()) {
+            case R.id.search:
+                HandleSearchComponent.toggleSearch();
+                break;
+            case R.id.shopping_cart:
+                Bundle bundle = new Bundle();
+                ((NavigationHost) activity).navigateTo(new CartFragment(), bundle, true);
+                break;
+        }
     }
 
 }

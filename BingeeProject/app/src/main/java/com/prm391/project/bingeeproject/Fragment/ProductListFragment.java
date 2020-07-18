@@ -1,5 +1,6 @@
 package com.prm391.project.bingeeproject.Fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,14 +42,23 @@ import com.prm391.project.bingeeproject.Adapter.CategoryCardViewHolder;
 import com.prm391.project.bingeeproject.Adapter.GlideApp;
 import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
 import com.prm391.project.bingeeproject.Adapter.ProductCardViewHolder;
+import com.prm391.project.bingeeproject.Common.LoginActivity;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Common.OnBoardingActivity;
+import com.prm391.project.bingeeproject.Common.SplashActivity;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
 import com.prm391.project.bingeeproject.Interface.ItemClickListener;
 import com.prm391.project.bingeeproject.Model.Category;
 import com.prm391.project.bingeeproject.Model.Product;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
+import com.prm391.project.bingeeproject.Utils.Utils;
 
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import xyz.sahildave.widget.SearchViewLayout;
 
 
 public class ProductListFragment extends Fragment {
@@ -62,19 +75,21 @@ public class ProductListFragment extends Fragment {
     private StorageReference imagesRef;
     private int lastPosition;
     private Parcelable recylerViewState;
+    private Timer timer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         loadingDialog = new LoadingDialog(getActivity());
-//        loadingDialog.startLoadingDialog();
+        loadingDialog.startLoadingDialog();
 
         mDatabase = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance("gs://bingee-358c7.appspot.com");
         storageRef = storage.getReference("product");
 
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -85,10 +100,22 @@ public class ProductListFragment extends Fragment {
 
         setUpToolbar(view);
 
+        HandleSearchComponent.handleSearchView(view, getActivity());
+
         Bundle bundle = this.getArguments();
         String categoryID = bundle.getString("categoryID");
+        String searchKeyword = bundle.getString("searchKeyword");
 
-        product = mDatabase.getReference().child("Product").orderByChild("mCategoryID").equalTo(categoryID);
+        if (!TextUtils.isEmpty(searchKeyword)) {
+            HandleSearchComponent.showSearchAndSetKeyword(searchKeyword);
+            product = mDatabase.getReference().child("Product").orderByChild("mName").startAt(searchKeyword.toUpperCase()).endAt(searchKeyword.toLowerCase() + "\uf8ff");
+
+        } else if (!TextUtils.isEmpty(categoryID)) {
+            product = mDatabase.getReference().child("Product").orderByChild("mCategoryID").equalTo(categoryID);
+
+        } else {
+            product = mDatabase.getReference().child("Product");
+        }
 
         recyclerView = view.findViewById(R.id.recycler_view_product);
         recyclerView.setHasFixedSize(false);
@@ -100,8 +127,43 @@ public class ProductListFragment extends Fragment {
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.bin_category_grid_spacing_small);
         recyclerView.addItemDecoration(new GridItemDecoration(largePadding, smallPadding));
 
+//
+
+//        toolbar = view.findViewById(R.id.app_bar);
+//        searchViewLayout = (SearchViewLayout) view.findViewById(R.id.search_view_container);
+//        searchViewLayout.setExpandedContentSupportFragment(getActivity(),new SearchFragment());
+//        searchViewLayout.handleToolbarAnimation(toolbar);
+//        searchViewLayout.handleToolbarAnimation(toolbar);
+//        searchViewLayout.setCollapsedHint(searchKeyword);
+//        searchViewLayout.setExpandedHint(searchKeyword);
+////        searchViewLayout.setHint("Global Hint");
+//
+//        searchViewLayout.setSearchListener(new SearchViewLayout.SearchListener() {
+//            @Override
+//            public void onFinished(String searchKeyword) {
+//                searchViewLayout.collapse();
+//                Snackbar.make(searchViewLayout, "Start Search for - " + searchKeyword, Snackbar.LENGTH_LONG).show();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("searchKeyword", searchKeyword);
+//
+//                ProductListFragment productListFragment = new ProductListFragment();
+////                        productListFragment.setArguments(bundle);
+//
+//                ((NavigationHost) getActivity()).navigateTo(productListFragment, bundle, true);
+//            }
+//        });
+////
         loadListProduct();
 
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                loadingDialog.dismissDialog();
+            }
+        };
+
+        timer = new Timer();
+        timer.schedule(task, 1000);
         return view;
     }
 
@@ -120,7 +182,7 @@ public class ProductListFragment extends Fragment {
 
                 imagesRef = storageRef.child(model.getmImage());
 
-                if (getActivity()!=null){
+                if (getActivity() != null) {
                     GlideApp.with(getActivity()).load(imagesRef).into(holder.productImage);
                 }
 
@@ -131,9 +193,12 @@ public class ProductListFragment extends Fragment {
                         bundle.putString("productID", adapter.getRef(position).getKey());
                         ProductDetailFragment productDetailFragment = new ProductDetailFragment();
 //                        productDetailFragment.setArguments(bundle);
-                        ((NavigationHost) getActivity()).navigateTo(productDetailFragment, bundle,true);
+                        ((NavigationHost) getActivity()).navigateTo(productDetailFragment, bundle, true);
                     }
                 });
+                if (!TextUtils.isEmpty(holder.productTitle.getText()) & !TextUtils.isEmpty(holder.productPrice.getText())) {
+                    loadingDialog.dismissDialog();
+                }
             }
 
             @NonNull
@@ -174,14 +239,7 @@ public class ProductListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.search:
-                break;
-            case R.id.shopping_cart:
-                Bundle bundle = new Bundle();
-                ((NavigationHost) getActivity()).navigateTo(new CartFragment(),bundle, true);
-                break;
-        }
+        Utils.handleOnOptionsItemSelected(item, getActivity());
         return super.onOptionsItemSelected(item);
     }
 }

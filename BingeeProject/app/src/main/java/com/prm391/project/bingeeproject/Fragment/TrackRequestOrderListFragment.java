@@ -26,6 +26,8 @@ import com.prm391.project.bingeeproject.Common.NavigationHost;
 import com.prm391.project.bingeeproject.Interface.ItemClickListener;
 import com.prm391.project.bingeeproject.Model.Request;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
+import com.prm391.project.bingeeproject.Utils.Utils;
 
 
 public class TrackRequestOrderListFragment extends Fragment {
@@ -55,6 +57,9 @@ public class TrackRequestOrderListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_track_request_order_list, container, false);
 
         setUpToolbar(view);
+
+        HandleSearchComponent.handleSearchView(view,getActivity());
+
 
         mDatabase = FirebaseDatabase.getInstance();
 
@@ -134,14 +139,7 @@ public class TrackRequestOrderListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Bundle bundle = new Bundle();
-        switch (item.getItemId()) {
-            case R.id.search:
-                break;
-            case R.id.shopping_cart:
-                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), bundle,true);
-                break;
-        }
+        Utils.handleOnOptionsItemSelected(item,getActivity());
         return super.onOptionsItemSelected(item);
     }
 }

@@ -1,23 +1,30 @@
 package com.prm391.project.bingeeproject.Fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -29,12 +36,17 @@ import com.prm391.project.bingeeproject.Common.NavigationHost;
 import com.prm391.project.bingeeproject.Interface.ItemClickListener;
 import com.prm391.project.bingeeproject.Model.Category;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
+import com.prm391.project.bingeeproject.Utils.Utils;
+
+import xyz.sahildave.widget.SearchViewLayout;
 
 
 public class HomeFragment extends Fragment {
 
 
     private static final String TAG = HomeFragment.class.getSimpleName();
+
     private FirebaseDatabase mDatabase;
     private DatabaseReference categoryRef;
     private RecyclerView recyclerView;
@@ -43,6 +55,8 @@ public class HomeFragment extends Fragment {
     private StorageReference storageRef;
     private StorageReference imagesRef;
 
+//    private SearchViewLayout searchViewLayout;
+//    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +67,9 @@ public class HomeFragment extends Fragment {
         storageRef = storage.getReference("category");
 
         setHasOptionsMenu(true);
+
+
+
     }
 
     @Override
@@ -63,6 +80,9 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         setUpToolbar(view);
+
+        HandleSearchComponent.handleSearchView(view,getActivity());
+
 
         mDatabase = FirebaseDatabase.getInstance();
         categoryRef = mDatabase.getReference().child("Category");
@@ -80,6 +100,7 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
 
     private void loadCategory() {
 
@@ -114,7 +135,7 @@ public class HomeFragment extends Fragment {
                         ProductListFragment productListFragment = new ProductListFragment();
 //                        productListFragment.setArguments(bundle);
 
-                        ((NavigationHost) getActivity()).navigateTo(productListFragment, bundle,true);
+                        ((NavigationHost) getActivity()).navigateTo(productListFragment, bundle, true);
                     }
                 });
             }
@@ -144,21 +165,24 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.bin_toolbar_menu,menu);
+        inflater.inflate(R.menu.bin_toolbar_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Bundle bundle = new Bundle();
-        switch (item.getItemId()) {
-            case R.id.search:
-                ((NavigationHost) getActivity()).navigateTo(new TrackRequestOrderListFragment(), bundle,true);
-                break;
-            case R.id.shopping_cart:
-                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), bundle,true);
-                break;
-        }
+//        switch (item.getItemId()) {
+//            case R.id.search:
+//                HandleSearchComponent.toggleSearch();
+////                ((NavigationHost) getActivity()).navigateTo(new TrackRequestOrderListFragment(), bundle,true);
+//                break;
+//            case R.id.shopping_cart:
+//                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), bundle, true);
+//                break;
+//        }
+        Utils.handleOnOptionsItemSelected(item,getActivity());
         return super.onOptionsItemSelected(item);
     }
 }
