@@ -55,8 +55,8 @@ public class ItemCardRecyclerViewAdapter<T, C extends Fragment> extends Recycler
         cartDAO = new CartDAO(activity);
         this.storageRef = storageRef;
         this.view = view;
-        this.fragment= fragment;
-        this.layout=layout;
+        this.fragment = fragment;
+        this.layout = layout;
     }
 
     @NonNull
@@ -96,33 +96,34 @@ public class ItemCardRecyclerViewAdapter<T, C extends Fragment> extends Recycler
             holder.productPrice.setText(String.valueOf(order.getmPrice()) + "$");
 
             holder.quantity.setProgress(Integer.valueOf(order.getmQuantity()));
-            holder.quantity.setNumberPickerChangeListener(new OnNumberPickerChangeListener() {
+            if (snackbarLayout != null) {
+                holder.quantity.setNumberPickerChangeListener(new OnNumberPickerChangeListener() {
 
-                @Override
-                public void onProgressChanged(@NotNull NumberPicker numberPicker, int i, boolean b) {
+                    @Override
+                    public void onProgressChanged(@NotNull NumberPicker numberPicker, int i, boolean b) {
 //                    Utils.showSnackbarWithNoAction(snackbarLayout, "onProgressChanged");
-                    updateQuantity(order, snackbarLayout,view, holder.quantity, fragment);
-                }
+                        updateQuantity(order, snackbarLayout, view, holder.quantity, fragment);
+                    }
 
-                @Override
-                public void onStartTrackingTouch(@NotNull NumberPicker numberPicker) {
-                    updateQuantity(order, snackbarLayout,view, holder.quantity, fragment);
-                }
+                    @Override
+                    public void onStartTrackingTouch(@NotNull NumberPicker numberPicker) {
+                        updateQuantity(order, snackbarLayout, view, holder.quantity, fragment);
+                    }
 
-                @Override
-                public void onStopTrackingTouch(@NotNull NumberPicker numberPicker) {
-                    updateQuantity(order, snackbarLayout,view, holder.quantity, fragment);
-                }
-            });
+                    @Override
+                    public void onStopTrackingTouch(@NotNull NumberPicker numberPicker) {
+                        updateQuantity(order, snackbarLayout, view, holder.quantity, fragment);
+                    }
+                });
 
-            holder.setDeleteItemClickListener(new ItemClickListener() {
-                @Override
-                public void onClick(View view, int position, boolean isLongClick) {
-                    CartDAO cartDAO = new CartDAO(activity);
-                    cartDAO.delete(order.getmProductId(), order.getmProductName(), snackbarLayout,view, "deleteItemCart");
-                }
-            });
-
+                holder.setDeleteItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        CartDAO cartDAO = new CartDAO(activity);
+                        cartDAO.delete(order.getmProductId(), order.getmProductName(), snackbarLayout, view, "deleteItemCart");
+                    }
+                });
+            }
             holder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onClick(View view, int position, boolean isLongClick) {
@@ -130,16 +131,16 @@ public class ItemCardRecyclerViewAdapter<T, C extends Fragment> extends Recycler
                     bundle.putString("productID", order.getmProductId());
                     ProductDetailFragment productDetailFragment = new ProductDetailFragment();
 //                    productDetailFragment.setArguments(bundle);
-                    ((NavigationHost) activity).navigateTo(productDetailFragment, bundle,true);
+                    ((NavigationHost) activity).navigateTo(productDetailFragment, bundle, true);
                 }
             });
         }
     }
 
-    private void updateQuantity(Order order, View snackbarLayout,View view, NumberPicker quantity, C c) {
+    private void updateQuantity(Order order, View snackbarLayout, View view, NumberPicker quantity, C c) {
         String productId = order.getmProductId();
         String productName = order.getmProductName();
-        cartDAO.updateQuantity(snackbarLayout,view, productId, productName, quantity.getProgress(), c);
+        cartDAO.updateQuantity(snackbarLayout, view, productId, productName, quantity.getProgress(), c);
     }
 
 

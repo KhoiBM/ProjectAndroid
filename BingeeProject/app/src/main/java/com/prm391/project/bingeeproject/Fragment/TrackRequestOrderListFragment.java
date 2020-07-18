@@ -18,39 +18,31 @@ import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.prm391.project.bingeeproject.Adapter.CategoryCardViewHolder;
-import com.prm391.project.bingeeproject.Adapter.GlideApp;
+import com.google.firebase.database.Query;
 import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
+import com.prm391.project.bingeeproject.Adapter.RequestCardViewHolder;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
 import com.prm391.project.bingeeproject.Interface.ItemClickListener;
-import com.prm391.project.bingeeproject.Model.Category;
+import com.prm391.project.bingeeproject.Model.Request;
 import com.prm391.project.bingeeproject.R;
 
 
-public class HomeFragment extends Fragment {
+public class TrackRequestOrderListFragment extends Fragment {
 
 
-    private static final String TAG = HomeFragment.class.getSimpleName();
+    private static final String TAG = TrackRequestOrderListFragment.class.getSimpleName();
     private FirebaseDatabase mDatabase;
-    private DatabaseReference categoryRef;
     private RecyclerView recyclerView;
-    private FirebaseRecyclerAdapter<Category, CategoryCardViewHolder> adapter;
-    private FirebaseStorage storage;
-    private StorageReference storageRef;
-    private StorageReference imagesRef;
-
+    private FirebaseRecyclerAdapter<Request, RequestCardViewHolder> adapter;
+    private String phoneUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        storage = FirebaseStorage.getInstance("gs://bingee-358c7.appspot.com");
-        storageRef = storage.getReference("category");
+        Bundle bundle = this.getArguments();
+        phoneUser = bundle.getString("phoneUser");
 
         setHasOptionsMenu(true);
     }
@@ -60,63 +52,55 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_track_request_order_list, container, false);
 
         setUpToolbar(view);
 
         mDatabase = FirebaseDatabase.getInstance();
-        categoryRef = mDatabase.getReference().child("Category");
 
-        recyclerView = view.findViewById(R.id.recycler_view_category);
+        recyclerView = view.findViewById(R.id.recycler_view_requests_order);
         recyclerView.setHasFixedSize(false);
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
 
-        int largePadding = getResources().getDimensionPixelSize(R.dimen.bin_category_grid_spacing);
+        int largePadding = getResources().getDimensionPixelSize(R.dimen.bin_item_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.bin_category_grid_spacing_small);
         recyclerView.addItemDecoration(new GridItemDecoration(largePadding, smallPadding));
 
-        loadCategory();
+        loadRequestOrderList();
 
         return view;
     }
 
-    private void loadCategory() {
+    private void loadRequestOrderList() {
 
-        FirebaseRecyclerOptions<Category> options =
-                new FirebaseRecyclerOptions.Builder<Category>()
-                        .setQuery(categoryRef, Category.class)
+        Query requestList = mDatabase.getReference().child("Requests").orderByChild("mPhoneUser").equalTo(phoneUser);
+        FirebaseRecyclerOptions<Request> options =
+                new FirebaseRecyclerOptions.Builder<Request>()
+                        .setQuery(requestList, Request.class)
                         .build();
-        adapter = new FirebaseRecyclerAdapter<Category, CategoryCardViewHolder>(options) {
-            @NonNull
+        adapter = new FirebaseRecyclerAdapter<Request, RequestCardViewHolder>(options) {
             @Override
-            public CategoryCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_card, parent, false);
-                return new CategoryCardViewHolder(layoutView);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull final CategoryCardViewHolder holder, int position, @NonNull Category model) {
-
-                holder.categoryTitle.setText(model.getmName());
-
-                imagesRef = storageRef.child(model.getmImage());
-
-                GlideApp.with(holder.categoryImage.getContext()).load(imagesRef).into(holder.categoryImage);
-
-                final Category clickItem = model;
+            protected void onBindViewHolder(@NonNull RequestCardViewHolder holder, int position, @NonNull Request model) {
+               int ordinalNumbers=position +1;
+                holder.ordinalNumbers.setText(ordinalNumbers + ".");
+                holder.title.setText(adapter.getRef(position).getKey());
+                holder.date.setText(model.getmDateOrder());
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("categoryID", adapter.getRef(position).getKey());
+                        bundle.putString("requestId",adapter.getRef(position).getKey());
+                        ((NavigationHost) getActivity()).navigateTo(new ViewDetailRequestOrderFragment(), bundle,true);
 
-                        ProductListFragment productListFragment = new ProductListFragment();
-//                        productListFragment.setArguments(bundle);
-
-                        ((NavigationHost) getActivity()).navigateTo(productListFragment, bundle,true);
                     }
                 });
+            }
+            @NonNull
+            @Override
+            public RequestCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.request_card, parent, false);
+                return new RequestCardViewHolder(layoutView);
             }
         };
         recyclerView.setAdapter(adapter);
@@ -153,7 +137,6 @@ public class HomeFragment extends Fragment {
         Bundle bundle = new Bundle();
         switch (item.getItemId()) {
             case R.id.search:
-                ((NavigationHost) getActivity()).navigateTo(new TrackRequestOrderListFragment(), bundle,true);
                 break;
             case R.id.shopping_cart:
                 ((NavigationHost) getActivity()).navigateTo(new CartFragment(), bundle,true);

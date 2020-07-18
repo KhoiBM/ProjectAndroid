@@ -63,4 +63,8 @@
     <string name="bin_hint_credit_card">Credit Card</string>
     <string name="shipping_to_title">Shipping to</string>
     <string name="your_order_title">Your order</string>
+    <string name="bin_request_order_date">18/07/2020 18:05:30</string>
+    <string name="bin_request_title">MCWnh0LqYIRE13XFc0v</string>
+    <string name="bin_request_ordinal_numbers">1.</string>
+    <string name="bin_request_order_list_title">List Of Request Order</string>
 </resources>

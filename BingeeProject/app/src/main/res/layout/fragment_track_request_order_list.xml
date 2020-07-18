@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.TrackRequestOrderListFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_app_bar" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:text="@string/bin_request_order_list_title"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+                    <androidx.coordinatorlayout.widget.CoordinatorLayout
+                        android:id="@+id/snack_bar_cart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp" />
+
+                </RelativeLayout>
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:paddingStart="@dimen/bin_category_grid_spacing"
+                    android:paddingEnd="@dimen/bin_category_grid_spacing"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_requests_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,44 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:numberpicker="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardElevation="8dp"
+    app:cardPreventCornerOverlap="true">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:foregroundGravity="center">
+        <TextView
+            android:id="@+id/request_ordinal_numbers"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/bin_request_ordinal_numbers"
+            android:textAppearance="?attr/textAppearanceCaption" />
+        <TextView
+            android:id="@+id/request_title"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/bin_request_title"
+            android:textAppearance="?attr/textAppearanceCaption" />
+        <TextView
+            android:id="@+id/request_date"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/bin_request_order_date"
+            android:textAppearance="?attr/textAppearanceCaption" />
+
+    </GridLayout>
+</com.google.android.material.card.MaterialCardView>

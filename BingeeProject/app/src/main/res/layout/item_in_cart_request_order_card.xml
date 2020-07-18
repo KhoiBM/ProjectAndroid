@@ -53,8 +53,15 @@
             app:picker_max="100"
             app:picker_min="1"
             app:picker_orientation="horizontal"
-            app:picker_stepSize="1"
-            app:picker_tracker="exponential"
+            app:picker_stepSize="0"
+            app:picker_tracker="linear"
+            android:descendantFocusability="blocksDescendants"
+            app:picker_disableGestures="true"
+            android:clickable="false"
+            android:longClickable="false"
+            android:focusable="false"
+            android:defaultFocusHighlightEnabled="false"
+
             />
 
 
