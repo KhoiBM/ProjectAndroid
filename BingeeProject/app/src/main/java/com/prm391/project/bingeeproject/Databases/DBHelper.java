@@ -1,5 +1,6 @@
 package com.prm391.project.bingeeproject.Databases;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -20,8 +21,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     + "price real"
                     + ")";
 
-    public DBHelper(Context context, String dbName, int version) {
-        super(context, dbName, null, version);
+    public DBHelper(Activity activity, String dbName, int version) {
+        super(activity, dbName, null, version);
     }
 
     private final String DROP_TABLE_ORDERDETAIL = "DROP TABLE OrderDetail";

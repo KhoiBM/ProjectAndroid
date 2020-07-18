@@ -10,4 +10,5 @@
     <color name="textInputOutLineColor">#3700B3</color>
     <color name="white">#FFFFFF</color>
     <color name="gray"></color>
+    <color name="black">#000</color>
 </resources>

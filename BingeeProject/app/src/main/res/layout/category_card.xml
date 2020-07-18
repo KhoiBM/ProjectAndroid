@@ -16,7 +16,6 @@
             android:id="@+id/category_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/category_card_image_height"
-            android:background="?attr/colorPrimaryDark"
             android:scaleType="centerCrop" />
 
         <LinearLayout

@@ -1,20 +1,12 @@
 package com.prm391.project.bingeeproject.Common;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.transition.Fade;
 import android.transition.Transition;
@@ -23,28 +15,23 @@ import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.google.android.gms.common.internal.service.Common;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.hbb20.CountryCodePicker;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
 import com.prm391.project.bingeeproject.Model.User;
 import com.prm391.project.bingeeproject.R;
-import com.prm391.project.bingeeproject.Utils.Ultils;
+import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.ActivityLoginBinding;
-import com.prm391.project.bingeeproject.databinding.ActivityOnBoardingBinding;
 
-import java.util.Queue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -99,8 +86,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void go(final View view) {
 
-        if (!Ultils.isConnected(this)) {
-            Ultils.showCustomDialog(this);
+        if (!Utils.isConnected(this)) {
+            Utils.showCustomDialog(this);
         }
 
         //validate data
@@ -138,13 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                         String _phoneNo = dataSnapshot.child(_phoneNumber).child("mPhone").getValue(String.class);
                         String _pass = dataSnapshot.child(_phoneNumber).child("mPassword").getValue(String.class);
 
-                        User user = new User();
-                        user.setmFullName(_fullName);
-                        user.setmPhone(_phoneNo);
-                        user.setmPassword(_password);
-
-                        Snackbar.Callback callback = null;
-                        callback = snackbarCallBackOnDismissed();
+                        Snackbar.Callback callback = snackbarCallBackOnDismissed(_phoneNo,_pass);
                         Snackbar.make(view, "Login successful", Snackbar.LENGTH_SHORT)
                                 .addCallback(callback).show();
 
@@ -181,35 +162,69 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public Snackbar.Callback snackbarCallBackOnDismissed() {
+    private Snackbar.Callback snackbarCallBackOnDismissed(final String _phoneNo, final String _pass) {
         return new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
                 super.onDismissed(snackbar, event);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("phoneUser", _phoneNo);
+                intent.putExtra("password",_pass);
                 startActivity(intent);
                 finish();
+//                overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+
             }
 
         };
     }
 
 
-    public boolean validateField() {
-        String _phoneNumber = phoneNumber.getEditText().getText().toString().trim();
-        String _password = password.getEditText().getText().toString().trim();
-        if (TextUtils.isEmpty(_phoneNumber)) {
-            phoneNumber.setError("Phone number can not be empty");
+
+    private boolean checkValidPhone(String _phone) {
+        Pattern pattern = Pattern.compile("^(\\(\\d{3}\\)|\\d{3})-?\\d{3}-?\\d{4}$");
+        Matcher matcher = pattern.matcher(_phone);
+        if (TextUtils.isEmpty(_phone)) {
+            phoneNumber.setError("Phone can't be empty");
             phoneNumber.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(_password)) {
-            password.setError("Password can not be empty");
+        }
+        if (!matcher.matches()) {
+            phoneNumber.setError("Invalid phone pattern");
+            phoneNumber.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkValidPassword(String _password) {
+        Pattern pattern = Pattern.compile("^[A-Za-z0-9]{8,20}$");
+        Matcher matcher = pattern.matcher(_password);
+        if (TextUtils.isEmpty(_password)) {
+            password.setError("Password can't be empty");
             password.requestFocus();
             return false;
-        } else {
-            phoneNumber.setErrorEnabled(false);
-            password.setErrorEnabled(false);
+        }
+        if (!matcher.matches()) {
+            password.setError("Invalid password pattern");
+            password.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateField() {
+        String _phoneNumber = phoneNumber.getEditText().getText().toString().trim();
+        String _password = password.getEditText().getText().toString().trim();
+        phoneNumber.setErrorEnabled(false);
+        password.setErrorEnabled(false);
+
+        if (checkValidPhone(_phoneNumber) & checkValidPassword(_password)) {
             return true;
         }
+        return false;
+
     }
+
+
 }

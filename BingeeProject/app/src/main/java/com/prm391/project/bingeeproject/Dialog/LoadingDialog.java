@@ -21,6 +21,7 @@ public class LoadingDialog {
                 .setCancelable(true);
         dialog = builder.create();
         dialog.show();
+        dialog.getWindow().setLayout(800,600);
     }
 
     public void dismissDialog() {

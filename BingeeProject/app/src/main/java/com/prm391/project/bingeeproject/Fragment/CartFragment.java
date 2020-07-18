@@ -16,25 +16,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.prm391.project.bingeeproject.Adapter.CategoryCardViewHolder;
 import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
 import com.prm391.project.bingeeproject.Adapter.ItemCardRecyclerViewAdapter;
-import com.prm391.project.bingeeproject.Adapter.ItemCardViewHolder;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
 import com.prm391.project.bingeeproject.Databases.CartDAO;
-import com.prm391.project.bingeeproject.Model.Category;
 import com.prm391.project.bingeeproject.Model.Order;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.FragmentCartBinding;
-import com.prm391.project.bingeeproject.databinding.FragmentProductDetailBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.sephiroth.android.library.numberpicker.NumberPicker;
 
 
 public class CartFragment extends Fragment implements View.OnClickListener {
@@ -44,11 +43,15 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     private FragmentCartBinding mBinding;
     private RecyclerView recyclerView;
     private TextView totalPrice;
-    private Button checkout;
+    private Button checkout, cleanCart;
+    private View snackbarLayout;
+    private RelativeLayout layoutHeaderCart, layoutBodyCart, layoutEmptyCart;
     private List<Order> carts;
-    private ItemCardRecyclerViewAdapter<Order> adapter;
+    private ItemCardRecyclerViewAdapter<Order,CartFragment> adapter;
     private FirebaseStorage storage;
     private StorageReference storageRef;
+    private NumberPicker numberPickerQuantity;
+    private  CartDAO<CartFragment> cartDAO;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         storage = FirebaseStorage.getInstance("gs://bingee-358c7.appspot.com");
         storageRef = storage.getReference("product");
 
+         cartDAO = new CartDAO(getActivity());
     }
 
     @Override
@@ -73,41 +77,74 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         recyclerView = mBinding.recyclerViewCart;
         totalPrice = mBinding.cartTotalPrice;
         checkout = mBinding.btnCheckout;
+        cleanCart = mBinding.btnCleanCart;
+        snackbarLayout = mBinding.snackBarCart;
+        layoutHeaderCart = mBinding.layoutHeaderCart;
+        layoutBodyCart = mBinding.layoutBodyCart;
+        layoutEmptyCart = mBinding.layoutEmptyCart;
+        layoutEmptyCart.setVisibility(View.GONE);
+        numberPickerQuantity=view.findViewById(R.id.number_picker_quantity);
 
         checkout.setOnClickListener(this);
+        cleanCart.setOnClickListener(this);
 
         recyclerView.setHasFixedSize(false);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false));
+
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
+
         int largePadding = getResources().getDimensionPixelSize(R.dimen.bin_item_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.bin_category_grid_spacing_small);
         recyclerView.addItemDecoration(new GridItemDecoration(largePadding, smallPadding));
 
-        getListCart();
-
-        loadTotalPrice();
-
-        loadListCart();
-
+        loadViewCart();
 
         return view;
     }
+
+    public void loadViewCart() {
+        getListCart();
+        loadTotalPrice();
+        loadListCart();
+    }
+
+    public void reLoadViewCart() {
+        getReloadListCart();
+        loadTotalPrice();
+        loadListCart();
+    }
+
     private void getListCart() {
-        CartDAO cartDAO = new CartDAO(getContext());
+        carts = new ArrayList<>();
+        carts = cartDAO.getCarts();
+        if (carts.size() == 0) {
+            layoutHeaderCart.setVisibility(View.GONE);
+            layoutBodyCart.setVisibility(View.GONE);
+            layoutEmptyCart.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void getReloadListCart() {
         carts = new ArrayList<>();
         carts = cartDAO.getCarts();
     }
+    public void reloadWhenChangeQuantityDifferentZero() {
+        getListCart();
+        loadTotalPrice();
+    }
 
     private void loadTotalPrice() {
-        double total=0;
+        double total = 0;
         for (Order item : carts) {
-            total+=item.getmPrice()*item.getmQuantity();
+            total += item.getmPrice() * item.getmQuantity();
         }
-        totalPrice.setText(String.valueOf(total)+ "$");
+        totalPrice.setText(String.format("%.2f",total) + "$");
     }
 
     private void loadListCart() {
-        adapter = new ItemCardRecyclerViewAdapter<>(carts);
-        recyclerView.setAdapter(adapter);
+        if(getActivity()!=null){
+            adapter = new ItemCardRecyclerViewAdapter<>(getView(), getActivity(), carts, snackbarLayout,storageRef,CartFragment.this,R.layout.item_cart_card);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     private void setUpToolbar(View view) {
@@ -130,7 +167,6 @@ public class CartFragment extends Fragment implements View.OnClickListener {
             case R.id.search:
                 break;
             case R.id.shopping_cart:
-                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), true);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -150,15 +186,16 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     }
 
     private void cleanCart() {
-        CartDAO cartDAO = new CartDAO(getContext());
-        cartDAO.cleanCart();
+        if (carts.size() != 0) {
+            cartDAO.cleanCart(snackbarLayout, "cleanCart");
+        } else {
+            Utils.showSnackbarWithNoAction(snackbarLayout,"Cart is empty");
+        }
 
-        //refresh
-        getListCart();
-        loadTotalPrice();
-        loadListCart();
     }
 
     private void checkout() {
+        Bundle bundle = new Bundle();
+        ((NavigationHost) getActivity()).navigateTo(new CheckoutFragment(),bundle, true);
     }
 }

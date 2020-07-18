@@ -3,54 +3,68 @@ package com.prm391.project.bingeeproject.Model;
 import java.util.List;
 
 public class Request {
-    private String mPhone;
-    private String mName;
-    private String mAddress;
-    private String mTotal;
+    private String mPhoneUser;
+    private String mShippingToPhone;
+    private String mShippingToFullname;
+    private String mShippingToAddress;
+    private Double mTotal;
     private String mStatus;
+    private String mDateOrder;
+    private String mPaymentMethod;
     private List<Order> mOrders;
 
     public Request() {
     }
 
-    public Request(String mPhone, String mName, String mAddress, String mTotal, String mStatus, List<Order> mOrders) {
-        this.mPhone = mPhone;
-        this.mName = mName;
-        this.mAddress = mAddress;
+    public Request(String mPhoneUser, String mShippingToPhone, String mShippingToFullname, String mShippingToAddress, Double mTotal, String mStatus, String mDateOrder, String mPaymentMethod, List<Order> mOrders) {
+        this.mPhoneUser = mPhoneUser;
+        this.mShippingToPhone = mShippingToPhone;
+        this.mShippingToFullname = mShippingToFullname;
+        this.mShippingToAddress = mShippingToAddress;
         this.mTotal = mTotal;
         this.mStatus = mStatus;
+        this.mDateOrder = mDateOrder;
+        this.mPaymentMethod = mPaymentMethod;
         this.mOrders = mOrders;
     }
 
-    public String getmPhone() {
-        return mPhone;
+    public String getmPhoneUser() {
+        return mPhoneUser;
     }
 
-    public void setmPhone(String mPhone) {
-        this.mPhone = mPhone;
+    public void setmPhoneUser(String mPhoneUser) {
+        this.mPhoneUser = mPhoneUser;
     }
 
-    public String getmName() {
-        return mName;
+    public String getmShippingToPhone() {
+        return mShippingToPhone;
     }
 
-    public void setmName(String mName) {
-        this.mName = mName;
+    public void setmShippingToPhone(String mShippingToPhone) {
+        this.mShippingToPhone = mShippingToPhone;
     }
 
-    public String getmAddress() {
-        return mAddress;
+    public String getmShippingToFullname() {
+        return mShippingToFullname;
     }
 
-    public void setmAddress(String mAddress) {
-        this.mAddress = mAddress;
+    public void setmShippingToFullname(String mShippingToFullname) {
+        this.mShippingToFullname = mShippingToFullname;
     }
 
-    public String getmTotal() {
+    public String getmShippingToAddress() {
+        return mShippingToAddress;
+    }
+
+    public void setmShippingToAddress(String mShippingToAddress) {
+        this.mShippingToAddress = mShippingToAddress;
+    }
+
+    public Double getmTotal() {
         return mTotal;
     }
 
-    public void setmTotal(String mTotal) {
+    public void setmTotal(Double mTotal) {
         this.mTotal = mTotal;
     }
 
@@ -62,6 +76,22 @@ public class Request {
         this.mStatus = mStatus;
     }
 
+    public String getmDateOrder() {
+        return mDateOrder;
+    }
+
+    public void setmDateOrder(String mDateOrder) {
+        this.mDateOrder = mDateOrder;
+    }
+
+    public String getmPaymentMethod() {
+        return mPaymentMethod;
+    }
+
+    public void setmPaymentMethod(String mPaymentMethod) {
+        this.mPaymentMethod = mPaymentMethod;
+    }
+
     public List<Order> getmOrders() {
         return mOrders;
     }
@@ -70,3 +100,4 @@ public class Request {
         this.mOrders = mOrders;
     }
 }
+

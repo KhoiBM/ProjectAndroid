@@ -53,4 +53,14 @@
     <string name="action_delete_item">Delete</string>
     <string name="bin_item_price">100 $</string>
     <string name="action_clean_cart">Clean Cart</string>
+    <string name="bin_checkout_title">Checkout</string>
+    <string name="bin_btn_Finish">Finish</string>
+    <string name="bin_btn_place_order">Place Order</string>
+    <string name="method_delivery_title">Method Of Delivery</string>
+    <string name="bin_hint_cod_shipping">COD shipping</string>
+    <string name="pay_method_title">Payment Method</string>
+    <string name="bin_hint_cod">Cash on Delivery (COD)</string>
+    <string name="bin_hint_credit_card">Credit Card</string>
+    <string name="shipping_to_title">Shipping to</string>
+    <string name="your_order_title">Your order</string>
 </resources>

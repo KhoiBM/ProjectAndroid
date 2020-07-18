@@ -1,5 +1,4 @@
 package com.prm391.project.bingeeproject.Adapter;
-
 import android.content.Context;
 
 import com.bumptech.glide.Glide;
@@ -12,11 +11,9 @@ import com.google.firebase.storage.StorageReference;
 import java.io.InputStream;
 
 @GlideModule
-public class MyAppGlideModule extends AppGlideModule {
-
+public class MyGlideModule extends AppGlideModule {
     @Override
     public void registerComponents(Context context, Glide glide, Registry registry) {
-        // Register FirebaseImageLoader to handle StorageReference
         registry.append(StorageReference.class, InputStream.class,
                 new FirebaseImageLoader.Factory());
     }

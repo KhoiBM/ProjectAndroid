@@ -105,7 +105,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:focusable="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -166,7 +167,6 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_update_profile"
-                    style="@style/Widget.Bingee.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/groupGender"

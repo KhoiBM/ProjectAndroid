@@ -16,9 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -27,12 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.hbb20.CountryCodePicker;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
 import com.prm391.project.bingeeproject.Model.User;
-import com.prm391.project.bingeeproject.R;
-import com.prm391.project.bingeeproject.Utils.Ultils;
-import com.prm391.project.bingeeproject.databinding.ActivityLoginBinding;
+import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.ActivityRetailerSignUpBinding;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -76,8 +71,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void signup(final View view) {
-        if (!Ultils.isConnected(this)) {
-            Ultils.showCustomDialog(this);
+        if (!Utils.isConnected(this)) {
+            Utils.showCustomDialog(this);
         }
         if (!validateField()) {
             return;

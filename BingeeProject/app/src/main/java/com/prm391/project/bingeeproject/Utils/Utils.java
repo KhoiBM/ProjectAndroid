@@ -7,26 +7,16 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
+import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.prm391.project.bingeeproject.Common.LoginActivity;
 import com.prm391.project.bingeeproject.Model.User;
 
-public class Ultils {
+public class Utils {
 
-    //check Internet
-//    pubic static boolean isConnected(LoginActivity loginActivity) {
-//        ConnectivityManager connectivityManager = (ConnectivityManager) loginActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
-//
-//        NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-//        NetworkInfo mobileConn = connectivityManager.getNetworkInfo(connectivityManager.TYPE_MOBILE);
-//        if ((wifiConn != null && wifiConn.isConnected()) || (mobileConn != null && mobileConn.isConnected())) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
     public static boolean isConnected(Context context) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -56,6 +46,12 @@ public class Ultils {
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+    public static void showSnackbarWithNoAction( View view,String message){
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                .setAction("No action", null)
+                .show();
+
     }
 
 }

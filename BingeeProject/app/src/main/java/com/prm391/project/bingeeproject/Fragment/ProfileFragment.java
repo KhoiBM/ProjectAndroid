@@ -1,25 +1,25 @@
 package com.prm391.project.bingeeproject.Fragment;
 
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.DatePicker;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,20 +30,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.hbb20.CountryCodePicker;
-import com.prm391.project.bingeeproject.Common.LoginActivity;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
-import com.prm391.project.bingeeproject.Model.User;
 import com.prm391.project.bingeeproject.R;
-import com.prm391.project.bingeeproject.Utils.Ultils;
-import com.prm391.project.bingeeproject.databinding.ActivityLoginBinding;
+import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.FragmentProfileBinding;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -51,21 +47,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = ProfileFragment.class.getSimpleName();
     private FragmentProfileBinding mBinding;
     private String phoneUser, password;
-    //    CountryCodePicker countryCodePicker;
-    TextInputLayout phoneNumber, fullName, dob, address, email;
-    RadioButton rbtnMale, rbtnFemale;
-    MaterialButton update;
-    ImageView goback;
+    private TextInputLayout phoneNumber, fullName, dob, address, email;
+    private RadioButton rbtnMale, rbtnFemale;
+    private MaterialButton update;
     private LoadingDialog loadingDialog;
     private FirebaseDatabase mDatabase;
     private DatabaseReference table_user;
-    boolean phoneChanged = false;
+
+    private DatePickerDialog.OnDateSetListener setListener;
+    private DatePicker datePicker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         phoneUser = "0387741552";
         password = "12345678";
+
         mDatabase = FirebaseDatabase.getInstance();
         table_user = mDatabase.getReference("Users");
 
@@ -76,7 +74,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_profile, container, false);
         mBinding = FragmentProfileBinding.inflate(inflater, container, false);
         View view = mBinding.getRoot();
 
@@ -87,17 +84,51 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         dob = mBinding.textInputDob;
         address = mBinding.textInputAddress;
         email = mBinding.textInputEmail;
+
         rbtnMale = mBinding.rbtnMale;
         rbtnFemale = mBinding.rbtnFemale;
-//        countryCodePicker = mBinding.countryCodePicker;
+
         update = mBinding.btnUpdateProfile;
-//        goback = mBinding.profileBackButton;
 
         update.setOnClickListener(this);
-//        goback.setOnClickListener(this);
 
         loadingDialog = new LoadingDialog(getActivity());
         loadingDialog.startLoadingDialog();
+
+        createDOBDialog();
+
+        loadProfileUser();
+
+        return view;
+    }
+    private  void createDOBDialog(){
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        mBinding.editTextDob.setShowSoftInputOnFocus(false);
+
+        mBinding.editTextDob.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.ThemeOverlay_Material_Dialog,
+                        setListener,year,month,day);
+                datePickerDialog.show();
+            }
+        });
+
+        setListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month + 1;
+                String date = dayOfMonth + "/" + month + "/" + year;
+                dob.getEditText().setText(date);
+            }
+        };
+
+    }
+
+    private void loadProfileUser() {
         //Database
         Query checkUser = table_user.orderByChild("mPhone").equalTo(phoneUser);
         checkUser.addValueEventListener(new ValueEventListener() {
@@ -107,40 +138,63 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     loadingDialog.dismissDialog();
                     String systemPassWord = dataSnapshot.child(phoneUser).child("mPassword").getValue(String.class);
                     if (systemPassWord.equals(password)) {
-                        String _fullName = dataSnapshot.child(phoneUser).child("mFullName").getValue(String.class);
-                        String _phoneNo = dataSnapshot.child(phoneUser).child("mPhone").getValue(String.class);
-                        String _dob = dataSnapshot.child(phoneUser).child("mDOB").getValue(String.class);
-                        String _address = dataSnapshot.child(phoneUser).child("mAddress").getValue(String.class);
-                        String _email = dataSnapshot.child(phoneUser).child("mEmail").getValue(String.class);
-                        Boolean _gender = dataSnapshot.child(phoneUser).child("mGender").getValue(Boolean.class);
-                        fullName.getEditText().setText(_fullName);
-                        phoneNumber.getEditText().setText(_phoneNo);
-                        dob.getEditText().setText(_dob);
-                        address.getEditText().setText(_address);
-                        email.getEditText().setText(_email);
-                        if (_gender) {
-                            rbtnMale.setChecked(true);
-                        } else {
-                            rbtnFemale.setChecked(true);
-                        }
+                        showProfileWhenUserValid(dataSnapshot);
                     }
                 } else {
                     loadingDialog.dismissDialog();
-                    Snackbar.make(container, "Data does not exist!", Snackbar.LENGTH_SHORT)
-                            .setAction("No action", null)
-                            .show();
+                    Utils.showSnackbarWithNoAction(getView(), "Data does not exist!");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 loadingDialog.dismissDialog();
-                Snackbar.make(container, databaseError.getMessage(), Snackbar.LENGTH_SHORT)
-                        .setAction("No action", null)
-                        .show();
+                Utils.showSnackbarWithNoAction(getView(), databaseError.getMessage());
             }
         });
-        return view;
+    }
+
+
+    private String getFullname(DataSnapshot dataSnapshot, String id) {
+        return dataSnapshot.child(id).child("mFullName").getValue(String.class);
+    }
+
+    public String getPhoneNo(DataSnapshot dataSnapshot, String id) {
+        return dataSnapshot.child(id).child("mPhone").getValue(String.class);
+    }
+
+    public String getDob(DataSnapshot dataSnapshot, String id) {
+        return dataSnapshot.child(id).child("mDOB").getValue(String.class);
+    }
+
+
+    public String getAddress(DataSnapshot dataSnapshot, String id) {
+        return dataSnapshot.child(id).child("mAddress").getValue(String.class);
+    }
+
+
+    public String getEmail(DataSnapshot dataSnapshot, String id) {
+        return dataSnapshot.child(id).child("mEmail").getValue(String.class);
+    }
+
+
+    public Boolean getGender(DataSnapshot dataSnapshot, String id) {
+        return dataSnapshot.child(id).child("mGender").getValue(Boolean.class);
+    }
+
+    private void showProfileWhenUserValid(DataSnapshot dataSnapshot) {
+
+        fullName.getEditText().setText(getFullname(dataSnapshot, phoneUser));
+        phoneNumber.getEditText().setText(getPhoneNo(dataSnapshot, phoneUser));
+        dob.getEditText().setText(getDob(dataSnapshot, phoneUser));
+        address.getEditText().setText(getAddress(dataSnapshot, phoneUser));
+        email.getEditText().setText(getEmail(dataSnapshot, phoneUser));
+        if (getGender(dataSnapshot, phoneUser)) {
+            rbtnMale.setChecked(true);
+        } else {
+            rbtnFemale.setChecked(true);
+        }
+
     }
 
     @Override
@@ -150,6 +204,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void update(final View view) {
+        if (!validateField()) {
+            return;
+        }
         loadingDialog.startLoadingDialog();
         Query checkUser = table_user.orderByChild("mPhone").equalTo(phoneUser);
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -159,53 +216,28 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     loadingDialog.dismissDialog();
                     String systemPassWord = dataSnapshot.child(phoneUser).child("mPassword").getValue(String.class);
                     if (systemPassWord.equals(password)) {
-                        String _fullName = dataSnapshot.child(phoneUser).child("mFullName").getValue(String.class);
-                        String _phoneNo = dataSnapshot.child(phoneUser).child("mPhone").getValue(String.class);
-                        String _dob = dataSnapshot.child(phoneUser).child("mDOB").getValue(String.class);
-                        String _address = dataSnapshot.child(phoneUser).child("mAddress").getValue(String.class);
-                        String _email = dataSnapshot.child(phoneUser).child("mEmail").getValue(String.class);
-                        Boolean _gender = dataSnapshot.child(phoneUser).child("mGender").getValue(Boolean.class);
-
-                        User user = new User();
-                        user.setmFullName(_fullName);
-                        user.setmPassword(systemPassWord);
-                        user.setmPhone(_phoneNo);
-                        user.setmDOB(_dob);
-                        user.setmAddress(_address);
-                        user.setmEmail(_email);
-                        user.setmGender(_gender);
-//                        isPhoneNoChanged(user, view);
-                        if (isFullNameChanged(_fullName) | isDOBChanged(_dob) | isAddressChanged(_address) | isEmailChanged(_email) | isGenderChanged(_gender)) {
-                            Snackbar.make(view, "Data has been updated", Snackbar.LENGTH_SHORT)
-                                    .setAction("No action", null)
-                                    .show();
-                        }
-
+                        updateWhenUserValid(dataSnapshot);
                     } else {
-//                        progressbar.setVisibility(View.GONE);
-                        Snackbar.make(view, "Please login again to update because password not match!", Snackbar.LENGTH_SHORT)
-                                .setAction("No action", null)
-                                .show();
-
+                        Utils.showSnackbarWithNoAction(getView(), "Please login again to update because password not match!");
                     }
                 } else {
                     loadingDialog.dismissDialog();
-                    Snackbar.make(view, "Data does not exist!", Snackbar.LENGTH_SHORT)
-                            .setAction("No action", null)
-                            .show();
+                    Utils.showSnackbarWithNoAction(getView(), "Data does not exist!");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 loadingDialog.dismissDialog();
-                Snackbar.make(view, databaseError.getMessage(), Snackbar.LENGTH_SHORT)
-                        .setAction("No action", null)
-                        .show();
+                Utils.showSnackbarWithNoAction(getView(), databaseError.getMessage());
             }
         });
+    }
 
-
+    private void updateWhenUserValid(DataSnapshot dataSnapshot) {
+        if (isFullNameChanged(getFullname(dataSnapshot, phoneUser)) | isDOBChanged(getDob(dataSnapshot, phoneUser)) | isAddressChanged(getAddress(dataSnapshot, phoneUser)) | isEmailChanged(getEmail(dataSnapshot, phoneUser)) | isGenderChanged(getGender(dataSnapshot, phoneUser))) {
+            Utils.showSnackbarWithNoAction(getView(), "Data has been updated");
+        }
     }
 
 //    public void isPhoneNoChanged(final User user, final View view) {
@@ -240,7 +272,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 //            });
 //        }
 //    }
-
 
     private boolean isFullNameChanged(String _fullName) {
         String up_fullName = fullName.getEditText().getText().toString().trim();
@@ -295,15 +326,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_update_profile:
                 update(v);
                 break;
-//            case R.id.profile_back_button:
-//                goBack(v);
-//                break;
         }
     }
 
     private void goBack(View v) {
-        ((NavigationHost) getActivity()).navigateTo(new HomeFragment(), true);
+        Bundle bundle = new Bundle();
+        ((NavigationHost) getActivity()).navigateTo(new HomeFragment(),bundle, true);
     }
+
     private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.app_bar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -311,22 +341,91 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             activity.setSupportActionBar(toolbar);
         }
     }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.bin_toolbar_menu,menu);
+        inflater.inflate(R.menu.bin_toolbar_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
                 break;
             case R.id.shopping_cart:
-                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), true);
+                Bundle bundle = new Bundle();
+                ((NavigationHost) getActivity()).navigateTo(new CartFragment(),bundle, true);
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
+
+    //check valid
+
+    private boolean validateField() {
+        String _fullName = fullName.getEditText().getText().toString().trim();
+        String _address = address.getEditText().getText().toString().trim();
+        String _email = email.getEditText().getText().toString().trim();
+        fullName.setErrorEnabled(false);
+        address.setErrorEnabled(false);
+        email.setErrorEnabled(false);
+
+        if (checkValidFullName(_fullName) && checkValidAddress(_address) && checkValidEmail(_email)) {
+            return true;
+        }
+        return false;
+
+    }
+
+    private boolean checkValidFullName(String _fullName) {
+//        Pattern pattern = Pattern.compile("^[A-Za-z]{1,20}$");
+//        Matcher matcher = pattern.matcher(_fullName);
+        if (TextUtils.isEmpty(_fullName) ) {
+            fullName.setError("Full name field can't be empty");
+            fullName.requestFocus();
+            return false;
+        }
+//        if (!matcher.matches()) {
+//            fullName.setError("Invalid Full name pattern");
+//            fullName.requestFocus();
+//            return false;
+//        }
+        return true;
+    }
+
+    private boolean checkValidAddress(String _address) {
+//        Pattern pattern = Pattern.compile("^[A-Za-z0-9]{1,20}$");
+//        Matcher matcher = pattern.matcher(_address);
+        if (TextUtils.isEmpty(_address)) {
+            address.setError("Address field can't be empty");
+            address.requestFocus();
+            return false;
+        }
+//        if (!matcher.matches()) {
+//            address.setError("Invalid Address pattern");
+//            address.requestFocus();
+//            return false;
+//        }
+        return true;
+    }
+
+    private boolean checkValidEmail(String _email) {
+        Pattern pattern = Pattern.compile("^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$");
+        Matcher matcher = pattern.matcher(_email);
+        if (TextUtils.isEmpty(_email)) {
+            email.setError("Email field can't be empty");
+            email.requestFocus();
+            return false;
+        }
+        if (!matcher.matches()) {
+            email.setError("Invalid Email pattern");
+            email.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+
 
 }
