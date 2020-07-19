@@ -179,7 +179,7 @@ public class HomeFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         Bundle bundle = new Bundle();
         switch (item.getItemId()) {
-            case R.id.search:
+            case R.id.item_search:
                 HandleSearchComponent.toggleSearch();
 //                ((NavigationHost) getActivity()).navigateTo(new ProfileFragment(), bundle,true);
 //                ((NavigationHost) getActivity()).navigateTo(new TrackRequestOrderListFragment(), bundle,true);

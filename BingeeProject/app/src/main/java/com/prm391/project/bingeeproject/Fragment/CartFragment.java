@@ -168,7 +168,7 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.search:
+            case R.id.item_search:
                 HandleSearchComponent.toggleSearch();
                 break;
             case R.id.shopping_cart:

@@ -62,7 +62,7 @@ public class Utils {
     }
     public static void handleOnOptionsItemSelected(MenuItem item, FragmentActivity activity){
         switch (item.getItemId()) {
-            case R.id.search:
+            case R.id.item_search:
                 HandleSearchComponent.toggleSearch();
                 break;
             case R.id.shopping_cart:
