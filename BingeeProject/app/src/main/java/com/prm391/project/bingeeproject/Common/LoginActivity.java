@@ -81,7 +81,6 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             startActivity(intent);
         }
-
     }
 
     public void go(final View view) {

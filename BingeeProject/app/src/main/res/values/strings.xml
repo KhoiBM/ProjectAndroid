@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BingeeProject</string>
+    <string name="app_name">Bingee</string>
     <string name="first_slide_title">Essential baking ingredients</string>
     <string name="second_slide_title">Infuse personality with modern furniture</string>
     <string name="third_slide_title">Fast Delivery and Freeship</string>
@@ -67,4 +67,8 @@
     <string name="bin_request_title">MCWnh0LqYIRE13XFc0v</string>
     <string name="bin_request_ordinal_numbers">1.</string>
     <string name="bin_request_order_list_title">List Of Request Order</string>
+    <string name="status_title">Status</string>
+    <string name="bin_hint_place">Place</string>
+    <string name="bin_hint_shipping">Shipping</string>
+    <string name="bin_hint_Finish">Finish</string>
 </resources>

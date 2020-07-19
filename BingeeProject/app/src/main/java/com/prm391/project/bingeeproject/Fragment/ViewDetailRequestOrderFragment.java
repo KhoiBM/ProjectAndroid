@@ -60,7 +60,7 @@ public class ViewDetailRequestOrderFragment extends Fragment {
     private StorageReference storageRef;
     private CartDAO<ViewDetailRequestOrderFragment> cartDAO;
     private TextInputLayout phoneLayout, fullnameLayout, addressLayout;
-    private RadioButton rbtnCOD, rbtnCreditCard;
+    private RadioButton rbtnCOD, rbtnCreditCard,rbtnPlace,rbtnShipping,rbtnFinish ;
     private FirebaseDatabase mDatabase;
     private String phoneUser;
     private String requestId;
@@ -99,6 +99,9 @@ public class ViewDetailRequestOrderFragment extends Fragment {
         addressLayout = mBinding.textInputAddress;
         rbtnCOD = mBinding.rbtnCOD;
         rbtnCreditCard = mBinding.rbtnCreditCard;
+        rbtnPlace=mBinding.rbtnPlace;
+        rbtnShipping=mBinding.rbtnShipping;
+        rbtnFinish=mBinding.rbtnFinish;
 
         recyclerView = mBinding.recyclerViewCartRequestOrder;
         recyclerView.setHasFixedSize(false);
@@ -133,6 +136,9 @@ public class ViewDetailRequestOrderFragment extends Fragment {
                     totalPrice.setText(String.format("%.2f", request.getmTotal()) + "$");
                     rbtnCOD.setChecked(request.getmPaymentMethod().equals("Cash on Delivery (COD)"));
                     rbtnCreditCard.setChecked(request.getmPaymentMethod().equals("Credit Card"));
+                    rbtnPlace.setChecked(request.getmStatus().equals("Place"));
+                    rbtnShipping.setChecked(request.getmStatus().equals("Shipping"));
+                    rbtnFinish.setChecked(request.getmStatus().equals("Finish"));
                     carts = new ArrayList<>(request.getmOrders());
                     if (carts != null) {
                         loadListCart();

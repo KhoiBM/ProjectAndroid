@@ -55,8 +55,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private FirebaseDatabase mDatabase;
     private DatabaseReference table_user;
 
+
     private DatePickerDialog.OnDateSetListener setListener;
     private DatePicker datePicker;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         table_user = mDatabase.getReference("Users");
 
         setHasOptionsMenu(true);
+
+        Bundle bundle = this.getArguments();
+        phoneUser = bundle.getString("phoneUser");
+        password =bundle.getString("password");
     }
 
     @Override

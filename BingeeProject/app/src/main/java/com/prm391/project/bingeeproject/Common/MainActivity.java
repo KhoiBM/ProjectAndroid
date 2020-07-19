@@ -65,4 +65,12 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
 
         transaction.commit();
     }
+
+    @Override
+    public void logout() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

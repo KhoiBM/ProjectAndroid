@@ -88,6 +88,10 @@ public class CheckoutFragment extends Fragment implements View.OnClickListener {
 
         mDatabase = FirebaseDatabase.getInstance();
 
+        Bundle bundle = this.getArguments();
+        phoneUser = bundle.getString("phoneUser");
+        password =bundle.getString("password");
+
     }
 
     @Override
@@ -120,10 +124,6 @@ public class CheckoutFragment extends Fragment implements View.OnClickListener {
         int largePadding = getResources().getDimensionPixelSize(R.dimen.bin_item_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.bin_category_grid_spacing_small);
         recyclerView.addItemDecoration(new GridItemDecoration(largePadding, smallPadding));
-
-        Bundle bundle = this.getArguments();
-        phoneUser = bundle.getString("phoneUser");
-        password =bundle.getString("password");
 
         loadViewCart();
         loadInformationUserForCheckout();

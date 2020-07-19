@@ -19,7 +19,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="8dp"
             android:gravity="center_vertical"
-            android:text="@string/bin_request_ordinal_numbers"
             android:textAppearance="?attr/textAppearanceCaption" />
         <TextView
             android:id="@+id/request_title"

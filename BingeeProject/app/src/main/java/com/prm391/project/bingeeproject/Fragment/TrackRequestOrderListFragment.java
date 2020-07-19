@@ -87,8 +87,8 @@ public class TrackRequestOrderListFragment extends Fragment {
         adapter = new FirebaseRecyclerAdapter<Request, RequestCardViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull RequestCardViewHolder holder, int position, @NonNull Request model) {
-               int ordinalNumbers=position +1;
-                holder.ordinalNumbers.setText(ordinalNumbers + ".");
+
+//                holder.ordinalNumbers.setText(".");
                 holder.title.setText(adapter.getRef(position).getKey());
                 holder.date.setText(model.getmDateOrder());
                 holder.setItemClickListener(new ItemClickListener() {

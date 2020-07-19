@@ -1,6 +1,9 @@
 package com.prm391.project.bingeeproject.Fragment;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +36,9 @@ import com.google.firebase.storage.StorageReference;
 import com.prm391.project.bingeeproject.Adapter.CategoryCardViewHolder;
 import com.prm391.project.bingeeproject.Adapter.GlideApp;
 import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
+import com.prm391.project.bingeeproject.Common.LoginActivity;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Common.SignUpActivity;
 import com.prm391.project.bingeeproject.Interface.ItemClickListener;
 import com.prm391.project.bingeeproject.Model.Category;
 import com.prm391.project.bingeeproject.R;
@@ -69,7 +75,6 @@ public class HomeFragment extends Fragment {
         setHasOptionsMenu(true);
 
 
-
     }
 
     @Override
@@ -81,7 +86,7 @@ public class HomeFragment extends Fragment {
 
         setUpToolbar(view);
 
-        HandleSearchComponent.handleSearchView(view,getActivity());
+        HandleSearchComponent.handleSearchView(view, getActivity());
 
 
         mDatabase = FirebaseDatabase.getInstance();
@@ -165,7 +170,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.bin_toolbar_menu, menu);
+      inflater.inflate(R.menu.bin_toolbar_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -173,16 +178,18 @@ public class HomeFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Bundle bundle = new Bundle();
-//        switch (item.getItemId()) {
-//            case R.id.search:
+        switch (item.getItemId()) {
+            case R.id.search:
 //                HandleSearchComponent.toggleSearch();
-////                ((NavigationHost) getActivity()).navigateTo(new TrackRequestOrderListFragment(), bundle,true);
-//                break;
-//            case R.id.shopping_cart:
-//                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), bundle, true);
-//                break;
-//        }
-        Utils.handleOnOptionsItemSelected(item,getActivity());
+//                ((NavigationHost) getActivity()).navigateTo(new ProfileFragment(), bundle,true);
+                ((NavigationHost) getActivity()).navigateTo(new TrackRequestOrderListFragment(), bundle,true);
+//                ((NavigationHost) getActivity()).logout();
+                break;
+            case R.id.shopping_cart:
+                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), bundle, true);
+                break;
+        }
+//        Utils.handleOnOptionsItemSelected(item,getActivity());
         return super.onOptionsItemSelected(item);
     }
 }

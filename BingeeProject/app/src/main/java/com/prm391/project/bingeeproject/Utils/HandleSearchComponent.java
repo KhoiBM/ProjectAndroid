@@ -31,8 +31,8 @@ public class HandleSearchComponent {
         searchViewLayout.setExpandedContentSupportFragment(activity, new SearchFragment());
         searchViewLayout.handleToolbarAnimation(toolbar);
         searchViewLayout.handleToolbarAnimation(toolbar);
-        searchViewLayout.setCollapsedHint("Collapsed Hint");
-        searchViewLayout.setExpandedHint("Expanded Hint");
+        searchViewLayout.setCollapsedHint("Search");
+        searchViewLayout.setExpandedHint("Enter keywords");
 //        searchViewLayout.setHint("Global Hint");
 
 
@@ -46,7 +46,6 @@ public class HandleSearchComponent {
                 bundle.putString("searchKeyword", searchKeyword);
 
                 ProductListFragment productListFragment = new ProductListFragment();
-//                        productListFragment.setArguments(bundle);
 
                 ((NavigationHost)activity).navigateTo(productListFragment, bundle, true);
             }
