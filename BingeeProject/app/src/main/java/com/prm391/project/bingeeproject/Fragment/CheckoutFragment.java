@@ -263,7 +263,7 @@ public class CheckoutFragment extends Fragment implements View.OnClickListener {
                 request.setmStatus("Place");
                 String currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
                 request.setmDateOrder(currentDate);
-                request.setmTotal(Double.parseDouble(String.format("%.2f", total)));
+                request.setmTotal(total);
                 request.setmOrders(carts);
 
                 table_requests.push().setValue(request);

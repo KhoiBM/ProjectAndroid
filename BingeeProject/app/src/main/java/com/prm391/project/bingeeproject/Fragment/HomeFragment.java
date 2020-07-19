@@ -180,9 +180,9 @@ public class HomeFragment extends Fragment {
         Bundle bundle = new Bundle();
         switch (item.getItemId()) {
             case R.id.search:
-//                HandleSearchComponent.toggleSearch();
+                HandleSearchComponent.toggleSearch();
 //                ((NavigationHost) getActivity()).navigateTo(new ProfileFragment(), bundle,true);
-                ((NavigationHost) getActivity()).navigateTo(new TrackRequestOrderListFragment(), bundle,true);
+//                ((NavigationHost) getActivity()).navigateTo(new TrackRequestOrderListFragment(), bundle,true);
 //                ((NavigationHost) getActivity()).logout();
                 break;
             case R.id.shopping_cart:
