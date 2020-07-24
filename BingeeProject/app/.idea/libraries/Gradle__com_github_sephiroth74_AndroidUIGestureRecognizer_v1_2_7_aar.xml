@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.sephiroth74:AndroidUIGestureRecognizer:v1.2.7@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/66565869374d04f30127d3aec3020f8c/jetified-AndroidUIGestureRecognizer-v1.2.7/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/66565869374d04f30127d3aec3020f8c/jetified-AndroidUIGestureRecognizer-v1.2.7/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

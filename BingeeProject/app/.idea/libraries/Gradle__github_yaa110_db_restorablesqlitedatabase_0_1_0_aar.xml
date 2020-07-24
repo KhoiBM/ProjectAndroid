@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: github.yaa110.db:restorablesqlitedatabase:0.1.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fd7ed589722154e5d8e7ce32ac5982c8/jetified-restorablesqlitedatabase-0.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fd7ed589722154e5d8e7ce32ac5982c8/jetified-restorablesqlitedatabase-0.1.0/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/github.yaa110.db/restorablesqlitedatabase/0.1.0/51022aad59eabb066b77fa5716b553f7b87931f7/restorablesqlitedatabase-0.1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/github.yaa110.db/restorablesqlitedatabase/0.1.0/78afab0f14bc0c6a9d9f9a5db01301c1de97c3d1/restorablesqlitedatabase-0.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
