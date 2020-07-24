@@ -36,10 +36,9 @@ import java.util.regex.Pattern;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
-    //    CountryCodePicker countryCodePicker;
-    TextInputLayout phoneNumber, password;
-    RelativeLayout progressbar;
-    MaterialButton signup;
+    private TextInputLayout phoneNumber, password;
+    private RelativeLayout progressbar;
+    private MaterialButton signup;
     private LoadingDialog loadingDialog;
     private ActivityLoginBinding mBinding;
     private FirebaseDatabase mDatabase;
@@ -61,26 +60,19 @@ public class LoginActivity extends AppCompatActivity {
         phoneNumber = mBinding.textInputPhone;
         password = mBinding.textInputPassword;
         progressbar = mBinding.progressbar;
-//        countryCodePicker = mBinding.countryCodePicker;
         signup = mBinding.buttonSignup;
 
         loadingDialog = new LoadingDialog(LoginActivity.this);
-
+//        loadingDialog.startLoadingDialog();
         mDatabase = FirebaseDatabase.getInstance();
     }
 
     public void signup(View view) {
         Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
 
-        Pair[] pairs = new Pair[1];
-        pairs[0] = new Pair<View, String>(signup, "transition_signup");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
-            startActivity(intent, options.toBundle());
-        } else {
-            startActivity(intent);
-        }
     }
 
     public void go(final View view) {
@@ -100,12 +92,6 @@ public class LoginActivity extends AppCompatActivity {
         final String _password = password.getEditText().getText().toString().trim();
         Log.i(TAG, "_phoneNumber: " + _phoneNumber);
 
-//        if (_phoneNumber.charAt(0) == '0') {
-//            _phoneNumber = _phoneNumber.substring(1);
-//        }
-//        final String _completePhoneNumber = "+" + countryCodePicker.getFullNumber() +"-"+ _phoneNumber;
-//        Log.i(TAG, "_completePhoneNumber: " + _completePhoneNumber);
-
         //Database
         Query checkUser = mDatabase.getReference("Users").orderByChild("mPhone").equalTo(_phoneNumber);
 
@@ -124,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                         String _phoneNo = dataSnapshot.child(_phoneNumber).child("mPhone").getValue(String.class);
                         String _pass = dataSnapshot.child(_phoneNumber).child("mPassword").getValue(String.class);
 
-                        Snackbar.Callback callback = snackbarCallBackOnDismissed(_phoneNo,_pass);
+                        Snackbar.Callback callback = snackbarCallBackOnDismissed(_phoneNo, _pass);
                         Snackbar.make(view, "Login successful", Snackbar.LENGTH_SHORT)
                                 .addCallback(callback).show();
 
@@ -168,16 +154,16 @@ public class LoginActivity extends AppCompatActivity {
                 super.onDismissed(snackbar, event);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("phoneUser", _phoneNo);
-                intent.putExtra("password",_pass);
+                intent.putExtra("password", _pass);
+                intent.putExtra("isAuth",true);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
                 finish();
-//                overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
 
             }
 
         };
     }
-
 
 
     private boolean checkValidPhone(String _phone) {

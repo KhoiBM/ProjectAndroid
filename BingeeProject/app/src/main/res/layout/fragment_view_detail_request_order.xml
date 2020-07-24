@@ -4,7 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.ViewDetailRequestOrderFragment">
+    tools:context=".Fragment.ViewDetailRequestOrderFragment"
+    android:background="@color/colorAccent">
+    <LinearLayout
+        android:id="@+id/view_backdrop"
+        style="@style/Widget.Bingee.Backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="80dp"
+        android:paddingBottom="100dp">
+
+        <include layout="@layout/layout_backdrop" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,238 +26,244 @@
 
         <include layout="@layout/layout_app_bar" />
 
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <RelativeLayout
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/view_detail_order_grid"
+                style="@style/ShapeAppearanceOverlay.Bingee.MaterialCardView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <LinearLayout
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:elevation="8dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/your_order_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:text="@string/your_order_title"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                        android:textColor="@color/black" />
-
-                    <androidx.core.widget.NestedScrollView
-                        android:id="@+id/nestedscroll_view_cartlist"
+                    android:layout_height="match_parent">
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/white"
-                        android:paddingStart="@dimen/bin_category_grid_spacing"
-                        android:paddingEnd="@dimen/bin_category_grid_spacing"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recycler_view_cart_request_order"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false" />
-                    </androidx.core.widget.NestedScrollView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card_view_checkout"
-                        style="@style/CardView.Light"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:elevation="4dp">
+                        android:layout_height="match_parent">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/your_order_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="20dp"
+                                android:text="@string/your_order_title"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                android:textColor="@color/black" />
+
+                            <androidx.core.widget.NestedScrollView
+                                android:id="@+id/nestedscroll_view_cartlist"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="8dp"
+                                android:paddingStart="@dimen/bin_category_grid_spacing"
+                                android:paddingEnd="@dimen/bin_category_grid_spacing"
+                                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recycler_view_cart_request_order"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:focusable="false" />
+                            </androidx.core.widget.NestedScrollView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/card_view_checkout"
+                                style="@style/CardView.Light"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginRight="16dp"
+                                android:elevation="4dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <RelativeLayout
+                                        android:id="@+id/layout_total_price"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <com.google.android.material.textview.MaterialTextView
+                                            style="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/bin_cart_total"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/cart_total_price"
+                                            style="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentRight="true"
+                                            android:inputType="numberDecimal"
+                                            android:text="@string/bin_cart_totalprice"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+                                    </RelativeLayout>
+                                </LinearLayout>
+                            </com.google.android.material.card.MaterialCardView>
+
                             <RelativeLayout
-                                android:id="@+id/layout_total_price"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginRight="16dp">
 
                                 <com.google.android.material.textview.MaterialTextView
-                                    style="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
+                                    android:id="@+id/shipping_to_title"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/bin_cart_total"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+                                    android:text="@string/shipping_to_title"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                    android:textColor="@color/black" />
 
-                                <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/cart_total_price"
-                                    style="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
-                                    android:layout_width="wrap_content"
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/text_input_phone"
+                                    style="@style/Widget.Bingee.TextInputLayout"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:inputType="numberDecimal"
-                                    android:text="@string/bin_cart_totalprice"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
-                            </RelativeLayout>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
+                                    android:layout_below="@+id/shipping_to_title"
+                                    android:enabled="true"
+                                    android:hint="@string/bin_hint_phonenumber"
+                                    app:errorEnabled="true">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginRight="16dp">
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edit_text_phone"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:enabled="false"
+                                        android:inputType="phone"
+                                        android:maxLines="1" />
+                                </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/shipping_to_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/shipping_to_title"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                            android:textColor="@color/black" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/text_input_phone"
-                            style="@style/Widget.Bingee.TextInputLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/shipping_to_title"
-                            android:enabled="true"
-                            android:hint="@string/bin_hint_phonenumber"
-                            app:errorEnabled="true">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/edit_text_phone"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:inputType="phone"
-                                android:maxLines="1" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/text_input_fullname"
-                            style="@style/Widget.Bingee.TextInputLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/text_input_phone"
-                            android:hint="@string/bin_hint_fullname"
-                            app:errorEnabled="true">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/edit_text_fullname"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:inputType="text"
-                                android:maxLines="1" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/text_input_address"
-                            style="@style/Widget.Bingee.TextInputLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/text_input_fullname"
-                            android:hint="@string/bin_hint_address"
-                            app:errorEnabled="true">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/edit_text_address"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:enabled="false"
-                                android:inputType="text"
-                                android:maxLines="1" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/text_input_address"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/pay_method_title"
-                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                android:textColor="@color/black" />
-
-                            <RadioGroup
-                                android:id="@+id/groupMethodOfDelivery"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:clickable="false"
-                                android:orientation="vertical">
-
-                                <RadioButton
-                                    android:id="@+id/rbtnCOD"
-                                    android:layout_width="180dp"
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/text_input_fullname"
+                                    style="@style/Widget.Bingee.TextInputLayout"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:clickable="false"
-                                    android:text="@string/bin_hint_cod" />
+                                    android:layout_below="@+id/text_input_phone"
+                                    android:hint="@string/bin_hint_fullname"
+                                    app:errorEnabled="true">
 
-                                <RadioButton
-                                    android:id="@+id/rbtnCreditCard"
-                                    android:layout_width="180dp"
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edit_text_fullname"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:enabled="false"
+                                        android:inputType="text"
+                                        android:maxLines="1" />
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/text_input_address"
+                                    style="@style/Widget.Bingee.TextInputLayout"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:clickable="false"
-                                    android:text="@string/bin_hint_credit_card" />
-                            </RadioGroup>
+                                    android:layout_below="@+id/text_input_fullname"
+                                    android:hint="@string/bin_hint_address"
+                                    app:errorEnabled="true">
 
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/status_title"
-                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                android:textColor="@color/black" />
-
-                            <RadioGroup
-                                android:id="@+id/groupStatusShipping"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:clickable="false"
-                                android:orientation="vertical">
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/edit_text_address"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:enabled="false"
+                                        android:inputType="text"
+                                        android:maxLines="1" />
+                                </com.google.android.material.textfield.TextInputLayout>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-                                    <RadioButton
-                                        android:id="@+id/rbtnPlace"
-                                        android:layout_width="120dp"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/bin_hint_place"
-                                        android:clickable="false"/>
+                                    android:layout_below="@id/text_input_address"
+                                    android:orientation="vertical">
 
-                                    <RadioButton
-                                        android:id="@+id/rbtnShipping"
-                                        android:layout_width="120dp"
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/bin_hint_shipping"
-                                        android:clickable="false"/>
-                                    <RadioButton
-                                        android:id="@+id/rbtnFinish"
-                                        android:layout_width="120dp"
+                                        android:text="@string/pay_method_title"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                        android:textColor="@color/black" />
+
+                                    <RadioGroup
+                                        android:id="@+id/groupMethodOfDelivery"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/bin_hint_Finish"
-                                        android:clickable="false"/>
+                                        android:clickable="false"
+                                        android:orientation="vertical">
+
+                                        <RadioButton
+                                            android:id="@+id/rbtnCOD"
+                                            android:layout_width="180dp"
+                                            android:layout_height="wrap_content"
+                                            android:clickable="false"
+                                            android:text="@string/bin_hint_cod" />
+
+                                        <RadioButton
+                                            android:id="@+id/rbtnCreditCard"
+                                            android:layout_width="180dp"
+                                            android:layout_height="wrap_content"
+                                            android:clickable="false"
+                                            android:text="@string/bin_hint_credit_card" />
+                                    </RadioGroup>
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/status_title"
+                                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                        android:textColor="@color/black" />
+
+                                    <RadioGroup
+                                        android:id="@+id/groupStatusShipping"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:clickable="false"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+                                            <RadioButton
+                                                android:id="@+id/rbtnPlace"
+                                                android:layout_width="120dp"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/bin_hint_place"
+                                                android:clickable="false"/>
+
+                                            <RadioButton
+                                                android:id="@+id/rbtnShipping"
+                                                android:layout_width="120dp"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/bin_hint_shipping"
+                                                android:clickable="false"/>
+                                            <RadioButton
+                                                android:id="@+id/rbtnFinish"
+                                                android:layout_width="120dp"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/bin_hint_Finish"
+                                                android:clickable="false"/>
+                                        </LinearLayout>
+
+                                    </RadioGroup>
+
                                 </LinearLayout>
-
-                            </RadioGroup>
-
+                            </RelativeLayout>
                         </LinearLayout>
                     </RelativeLayout>
-                </LinearLayout>
-            </RelativeLayout>
-        </ScrollView>
+                </ScrollView>
+            </androidx.core.widget.NestedScrollView>>
     </LinearLayout>
 
 </FrameLayout>

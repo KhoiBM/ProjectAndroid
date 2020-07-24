@@ -1,5 +1,6 @@
 package com.prm391.project.bingeeproject.Fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,13 +10,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,9 +28,11 @@ import com.google.firebase.storage.StorageReference;
 import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
 import com.prm391.project.bingeeproject.Adapter.ItemCardRecyclerViewAdapter;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Common.NavigationIconClickListener;
 import com.prm391.project.bingeeproject.Databases.CartDAO;
 import com.prm391.project.bingeeproject.Model.Order;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.HandleNavMenu;
 import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
 import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.FragmentCartBinding;
@@ -48,11 +54,13 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     private View snackbarLayout;
     private RelativeLayout layoutHeaderCart, layoutBodyCart, layoutEmptyCart;
     private List<Order> carts;
-    private ItemCardRecyclerViewAdapter<Order,CartFragment> adapter;
+    private ItemCardRecyclerViewAdapter<Order, CartFragment> adapter;
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private NumberPicker numberPickerQuantity;
-    private  CartDAO<CartFragment> cartDAO;
+    private CartDAO<CartFragment> cartDAO;
+    private LinearLayout view_backdrop;
+    private boolean isAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +71,11 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         storage = FirebaseStorage.getInstance("gs://bingee-358c7.appspot.com");
         storageRef = storage.getReference("product");
 
-         cartDAO = new CartDAO(getActivity());
+        cartDAO = new CartDAO(getActivity());
+
+        Bundle bundle = this.getArguments();
+        isAuth = bundle.getBoolean("isAuth");
+        Log.i(TAG, "isAuth" + isAuth);
     }
 
     @Override
@@ -75,8 +87,9 @@ public class CartFragment extends Fragment implements View.OnClickListener {
 
         setUpToolbar(view);
 
-        HandleSearchComponent.handleSearchView(view,getActivity());
+        HandleSearchComponent.handleSearchView(view, getActivity());
 
+        buttonsSetUp(view);
 
         recyclerView = mBinding.recyclerViewCart;
         totalPrice = mBinding.cartTotalPrice;
@@ -87,7 +100,7 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         layoutBodyCart = mBinding.layoutBodyCart;
         layoutEmptyCart = mBinding.layoutEmptyCart;
         layoutEmptyCart.setVisibility(View.GONE);
-        numberPickerQuantity=view.findViewById(R.id.number_picker_quantity);
+        numberPickerQuantity = view.findViewById(R.id.number_picker_quantity);
 
         checkout.setOnClickListener(this);
         cleanCart.setOnClickListener(this);
@@ -101,6 +114,10 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         recyclerView.addItemDecoration(new GridItemDecoration(largePadding, smallPadding));
 
         loadViewCart();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.cart_grid).setBackgroundResource(R.drawable.corner_cut_grid_background_shape);
+        }
 
         return view;
     }
@@ -131,6 +148,7 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         carts = new ArrayList<>();
         carts = cartDAO.getCarts();
     }
+
     public void reloadWhenChangeQuantityDifferentZero() {
         getListCart();
         loadTotalPrice();
@@ -141,12 +159,12 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         for (Order item : carts) {
             total += item.getmPrice() * item.getmQuantity();
         }
-        totalPrice.setText(String.format("%.2f",total) + "$");
+        totalPrice.setText(String.format("%.2f", total) + "$");
     }
 
     private void loadListCart() {
-        if(getActivity()!=null){
-            adapter = new ItemCardRecyclerViewAdapter<>(getView(), getActivity(), carts, snackbarLayout,storageRef,CartFragment.this,R.layout.item_cart_card);
+        if (getActivity() != null) {
+            adapter = new ItemCardRecyclerViewAdapter<>(getView(), getActivity(), carts, snackbarLayout, storageRef, CartFragment.this, R.layout.item_cart_card);
             recyclerView.setAdapter(adapter);
         }
     }
@@ -157,6 +175,13 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
         }
+
+        toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
+                getContext(),
+                view.findViewById(R.id.cart_grid),
+                new AccelerateDecelerateInterpolator(),
+                getContext().getResources().getDrawable(R.drawable.bin_menu),
+                getContext().getResources().getDrawable(R.drawable.ic_close),view));
     }
 
     @Override
@@ -177,6 +202,33 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
+    private Button nav_btn_ingredients, nav_btn_furniture, nav_btn_go_home, nav_btn_my_account;
+
+    private void buttonsSetUp(View view) {
+        //menu button setup
+
+        HandleNavMenu.setupButton(this, view, nav_btn_go_home, R.id.nav_btn_go_home);
+        HandleNavMenu.setupButton(this, view, nav_btn_ingredients, R.id.nav_btn_ingredients);
+        HandleNavMenu.setupButton(this, view, nav_btn_furniture, R.id.nav_btn_furniture);
+        nav_btn_my_account = view.findViewById(R.id.nav_btn_my_account);
+        setActionForBtnMyAccount();
+        //--------------------------------
+    }
+    private void setActionForBtnMyAccount(){
+        if(isAuth){
+            nav_btn_my_account.setText("MY ACCOUNT");
+            nav_btn_my_account.setOnClickListener(this);
+        }else{
+            nav_btn_my_account.setText("LOGIN");
+            nav_btn_my_account.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) getActivity()).login();
+                }
+            });
+        }
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -188,19 +240,20 @@ public class CartFragment extends Fragment implements View.OnClickListener {
                 cleanCart();
                 break;
         }
+        HandleNavMenu.commonNavigationMenuForCategory(v, getActivity());
     }
 
     private void cleanCart() {
         if (carts.size() != 0) {
             cartDAO.cleanCart(snackbarLayout, "cleanCart");
         } else {
-            Utils.showSnackbarWithNoAction(snackbarLayout,"Cart is empty");
+            Utils.showSnackbarWithNoAction(snackbarLayout, "Cart is empty");
         }
 
     }
 
     private void checkout() {
         Bundle bundle = new Bundle();
-        ((NavigationHost) getActivity()).navigateTo(new CheckoutFragment(),bundle, true);
+        ((NavigationHost) getActivity()).navigateTo(new CheckoutFragment(), bundle, true);
     }
 }

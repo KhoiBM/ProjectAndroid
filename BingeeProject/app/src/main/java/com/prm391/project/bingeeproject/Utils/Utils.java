@@ -12,14 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.prm391.project.bingeeproject.Common.LoginActivity;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
 import com.prm391.project.bingeeproject.Fragment.CartFragment;
-import com.prm391.project.bingeeproject.Model.User;
+import com.prm391.project.bingeeproject.Fragment.HomeFragment;
+import com.prm391.project.bingeeproject.Fragment.ProductListFragment;
 import com.prm391.project.bingeeproject.R;
 
 public class Utils {
@@ -35,6 +34,7 @@ public class Utils {
 
         return isConnected;
     }
+
     public static void showCustomDialog(final Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("Please connect to the internet to proceed further")
@@ -42,7 +42,7 @@ public class Utils {
                 .setPositiveButton("Connect", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ( (Activity)context).startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        ((Activity) context).startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -54,13 +54,15 @@ public class Utils {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    public static void showSnackbarWithNoAction( View view,String message){
+
+    public static void showSnackbarWithNoAction(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
                 .setAction("No action", null)
                 .show();
 
     }
-    public static void handleOnOptionsItemSelected(MenuItem item, FragmentActivity activity){
+
+    public static void handleOnOptionsItemSelected(MenuItem item, FragmentActivity activity) {
         switch (item.getItemId()) {
             case R.id.item_search:
                 HandleSearchComponent.toggleSearch();
@@ -71,5 +73,6 @@ public class Utils {
                 break;
         }
     }
+
 
 }

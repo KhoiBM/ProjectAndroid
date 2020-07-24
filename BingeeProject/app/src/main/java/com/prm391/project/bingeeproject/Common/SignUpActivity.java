@@ -27,16 +27,18 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
 import com.prm391.project.bingeeproject.Model.User;
+import com.prm391.project.bingeeproject.R;
 import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.ActivityRetailerSignUpBinding;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = SignUpActivity.class.getSimpleName();
-    //    CountryCodePicker countryCodePicker;
     TextInputLayout phoneNumber, fullName, password;
     ImageView goBack;
-    //    RelativeLayout progressbar;
     LinearLayout layoutSignUp;
     private LoadingDialog loadingDialog;
     private ActivityRetailerSignUpBinding mSignUpBinding;
@@ -54,14 +56,13 @@ public class SignUpActivity extends AppCompatActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-//        setContentView(R.layout.activity_retailer_sign_up);
         mSignUpBinding = ActivityRetailerSignUpBinding.inflate(getLayoutInflater());
         setContentView(mSignUpBinding.getRoot());
+
         phoneNumber = mSignUpBinding.textInputPhone;
         fullName = mSignUpBinding.textInputFullname;
         password = mSignUpBinding.textInputPassword;
-//        progressbar = mSignUpBinding.progressbar;
-//        countryCodePicker = mSignUpBinding.countryCodePicker;
+
         goBack = mSignUpBinding.signupBackButton;
         layoutSignUp= mSignUpBinding.layoutSignUp;
 
@@ -85,11 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
         final String _password = password.getEditText().getText().toString().trim();
         Log.i(TAG, "_fullName: " + _fullName);
         Log.i(TAG, "_password: " + _password);
-//        if (_phoneNumber.charAt(0) == '0') {
-//            _phoneNumber = _phoneNumber.substring(1);
-//        }
-//        final String _completePhoneNumber = "+" + countryCodePicker.getFullNumber()  +"-"+  _phoneNumber;
-//        Log.i(TAG, "_completePhoneNumber: " + _completePhoneNumber);
+
 //        Database
         final DatabaseReference table_user = mDatabase.getReference("Users");
         Query checkUser = table_user.orderByChild("mPhone").equalTo(_phoneNumber);
@@ -115,8 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
                     user.setmPassword(_password);
                     table_user.child(_phoneNumber).setValue(user);
 
-                    Snackbar.Callback callback = null;
-                    callback = snackbarCallBackOnDismissed();
+                    Snackbar.Callback callback= snackbarCallBackOnDismissed(_phoneNumber,_password);
                     Snackbar.make(view, "SignUp successful", Snackbar.LENGTH_LONG)
                             .addCallback(callback).show();
                 }
@@ -134,13 +130,17 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    public Snackbar.Callback snackbarCallBackOnDismissed() {
+    public Snackbar.Callback snackbarCallBackOnDismissed(final String _phoneNumber, final String _password) {
         return new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
                 super.onDismissed(snackbar, event);
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                intent.putExtra("phoneUser", _phoneNumber);
+                intent.putExtra("password",_password);
+                intent.putExtra("isAuth",true);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
                 finish();
             }
 
@@ -150,39 +150,81 @@ public class SignUpActivity extends AppCompatActivity {
     public void goBack(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
 
-        Pair[] pairs = new Pair[1];
-        pairs[0] = new Pair<View, String>(layoutSignUp, "transition_signup");
+//        Pair[] pairs = new Pair[1];
+//        pairs[0] = new Pair<View, String>(layoutSignUp, "transition_signup");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,pairs);
-            startActivity(intent, options.toBundle());
-        } else {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,pairs);
+//            startActivity(intent, options.toBundle());
+//        } else {
             startActivity(intent);
-        }
+        overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+
+//        }
 
     }
 
-    public boolean validateField() {
+    private boolean checkValidPhone(String _phone) {
+        Pattern pattern = Pattern.compile("^(\\(\\d{3}\\)|\\d{3})-?\\d{3}-?\\d{4}$");
+        Matcher matcher = pattern.matcher(_phone);
+        if (TextUtils.isEmpty(_phone)) {
+            phoneNumber.setError("Phone can't be empty");
+            phoneNumber.requestFocus();
+            return false;
+        }
+        if (!matcher.matches()) {
+            phoneNumber.setError("Invalid phone pattern");
+            phoneNumber.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkFullName(String _fullName) {
+        Pattern pattern = Pattern.compile("^[A-Za-z ]{4,20}$");
+        Matcher matcher = pattern.matcher(_fullName);
+        if (TextUtils.isEmpty(_fullName)) {
+            fullName.setError("Full name can't be empty");
+            fullName.requestFocus();
+            return false;
+        }
+        if (!matcher.matches()) {
+            fullName.setError("Invalid full name pattern");
+            fullName.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkValidPassword(String _password) {
+        Pattern pattern = Pattern.compile("^[A-Za-z0-9]{8,20}$");
+        Matcher matcher = pattern.matcher(_password);
+        if (TextUtils.isEmpty(_password)) {
+            password.setError("Password can't be empty");
+            password.requestFocus();
+            return false;
+        }
+        if (!matcher.matches()) {
+            password.setError("Invalid password pattern");
+            password.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateField() {
         String _phoneNumber = phoneNumber.getEditText().getText().toString().trim();
         String _fullName = fullName.getEditText().getText().toString().trim();
         String _password = password.getEditText().getText().toString().trim();
-        if (TextUtils.isEmpty(_phoneNumber)) {
-            phoneNumber.setError("Phone number can not be empty");
-            phoneNumber.requestFocus();
-            return false;
-        } else if (TextUtils.isEmpty(_fullName)) {
-            fullName.setError("FullName can not be empty");
-            fullName.requestFocus();
-            return false;
-        } else if (TextUtils.isEmpty(_password)) {
-            password.setError("Password can not be empty");
-            password.requestFocus();
-            return false;
-        } else {
-            fullName.setErrorEnabled(false);
-            phoneNumber.setErrorEnabled(false);
-            password.setErrorEnabled(false);
+        phoneNumber.setErrorEnabled(false);
+        fullName.setErrorEnabled(false);
+        password.setErrorEnabled(false);
+
+        if (checkValidPhone(_phoneNumber) & checkValidPassword(_password) & checkFullName(_fullName)) {
             return true;
         }
+        return false;
+
     }
+
 }

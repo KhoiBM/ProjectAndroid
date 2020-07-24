@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
+import android.text.TextUtils;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -23,7 +25,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -38,17 +43,26 @@ import com.prm391.project.bingeeproject.Adapter.GlideApp;
 import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
 import com.prm391.project.bingeeproject.Common.LoginActivity;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Common.NavigationIconClickListener;
 import com.prm391.project.bingeeproject.Common.SignUpActivity;
+import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
 import com.prm391.project.bingeeproject.Interface.ItemClickListener;
 import com.prm391.project.bingeeproject.Model.Category;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.HandleNavMenu;
 import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
 import com.prm391.project.bingeeproject.Utils.Utils;
+import com.prm391.project.bingeeproject.databinding.FragmentHomeBinding;
+import com.prm391.project.bingeeproject.databinding.FragmentProductDetailBinding;
+import com.prm391.project.bingeeproject.databinding.LayoutBackdropBinding;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import xyz.sahildave.widget.SearchViewLayout;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     private static final String TAG = HomeFragment.class.getSimpleName();
@@ -60,20 +74,27 @@ public class HomeFragment extends Fragment {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private StorageReference imagesRef;
+    FragmentHomeBinding homeBinding;
+    private LoadingDialog loadingDialog;
+    private Timer timer;
+    private boolean isAuth;
 
-//    private SearchViewLayout searchViewLayout;
-//    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        loadingDialog = new LoadingDialog(getActivity());
+        loadingDialog.startLoadingDialog();
 
         storage = FirebaseStorage.getInstance("gs://bingee-358c7.appspot.com");
         storageRef = storage.getReference("category");
 
         setHasOptionsMenu(true);
 
+        Bundle bundle = this.getArguments();
+        isAuth = bundle.getBoolean("isAuth");
+        Log.i(TAG, "isAuth" + isAuth);
 
     }
 
@@ -81,8 +102,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        homeBinding = FragmentHomeBinding.inflate(inflater, container, false);
+        View view = homeBinding.getRoot();
+
 
         setUpToolbar(view);
 
@@ -92,7 +114,10 @@ public class HomeFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance();
         categoryRef = mDatabase.getReference().child("Category");
 
-        recyclerView = view.findViewById(R.id.recycler_view_category);
+        buttonsSetUp(view);
+
+
+        recyclerView = homeBinding.recyclerViewCategory;
         recyclerView.setHasFixedSize(false);
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
@@ -103,9 +128,22 @@ public class HomeFragment extends Fragment {
 
         loadCategory();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.home_grid).setBackgroundResource(R.drawable.corner_cut_grid_background_shape);
+        }
+
+                TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                loadingDialog.dismissDialog();
+            }
+        };
+
+        timer = new Timer();
+        timer.schedule(task, 1000);
+
         return view;
     }
-
 
     private void loadCategory() {
 
@@ -143,6 +181,9 @@ public class HomeFragment extends Fragment {
                         ((NavigationHost) getActivity()).navigateTo(productListFragment, bundle, true);
                     }
                 });
+                if (!TextUtils.isEmpty(holder.categoryTitle.getText())) {
+                    loadingDialog.dismissDialog();
+                }
             }
         };
         recyclerView.setAdapter(adapter);
@@ -160,36 +201,69 @@ public class HomeFragment extends Fragment {
         adapter.stopListening();
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.bin_toolbar_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private Button nav_btn_ingredients, nav_btn_furniture, nav_btn_cart, nav_btn_my_account;
+
+    private void buttonsSetUp(View view) {
+        //menu button setup
+
+//        nav_btn_go_home = view.findViewById(R.id.nav_btn_go_home);
+//        nav_btn_go_home.setOnClickListener(this);
+        nav_btn_ingredients = view.findViewById(R.id.nav_btn_ingredients);
+        nav_btn_ingredients.setOnClickListener(this);
+        nav_btn_furniture = view.findViewById(R.id.nav_btn_furniture);
+        nav_btn_furniture.setOnClickListener(this);
+        nav_btn_cart = view.findViewById(R.id.nav_btn_cart);
+        nav_btn_cart.setOnClickListener(this);
+        nav_btn_my_account = view.findViewById(R.id.nav_btn_my_account);
+        setActionForBtnMyAccount();
+
+
+        //--------------------------------
+    }
+    private void setActionForBtnMyAccount(){
+        if(isAuth){
+            nav_btn_my_account.setText("MY ACCOUNT");
+            nav_btn_my_account.setOnClickListener(this);
+        }else{
+            nav_btn_my_account.setText("LOGIN");
+            nav_btn_my_account.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) getActivity()).login();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        HandleNavMenu.commonNavigationMenuForCategory(v, getActivity());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Utils.handleOnOptionsItemSelected(item, getActivity());
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.app_bar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
         }
-    }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-      inflater.inflate(R.menu.bin_toolbar_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Bundle bundle = new Bundle();
-        switch (item.getItemId()) {
-            case R.id.item_search:
-                HandleSearchComponent.toggleSearch();
-//                ((NavigationHost) getActivity()).navigateTo(new ProfileFragment(), bundle,true);
-//                ((NavigationHost) getActivity()).navigateTo(new TrackRequestOrderListFragment(), bundle,true);
-//                ((NavigationHost) getActivity()).logout();
-                break;
-            case R.id.shopping_cart:
-                ((NavigationHost) getActivity()).navigateTo(new CartFragment(), bundle, true);
-                break;
-        }
-//        Utils.handleOnOptionsItemSelected(item,getActivity());
-        return super.onOptionsItemSelected(item);
+        toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
+                getContext(),
+                view.findViewById(R.id.home_grid),
+                new AccelerateDecelerateInterpolator(),
+                getContext().getResources().getDrawable(R.drawable.bin_menu),
+                getContext().getResources().getDrawable(R.drawable.ic_close), view));
     }
 }

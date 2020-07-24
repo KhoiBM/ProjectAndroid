@@ -8,6 +8,7 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
     </style>
+
     <style name="SplashTheme" parent="Theme.Bingee">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
@@ -22,7 +23,7 @@
     <style name="Widget.Bingee.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintTextAppearance">@style/TextAppearance.Bingee.TextInputLayout.HintText</item>
         <item name="hintTextColor">@color/textColorPrimary</item>
-<!--        <item name="android:paddingBottom">4dp</item>-->
+        <!--        <item name="android:paddingBottom">4dp</item>-->
         <item name="boxStrokeColor">@color/textInputOutLineColor</item>
     </style>
 
@@ -33,10 +34,15 @@
     <style name="Widget.Bingee.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/textColorSecondary</item>
         <item name="backgroundTint">?attr/colorPrimaryDark</item>
+
     </style>
 
     <style name="Widget.Bingee.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="android:stateListAnimator" tools:ignore="NewApi">
+            @animator/button_next_animation
+        </item>
     </style>
 
     <style name="Widget.Shrine.Toolbar" parent="Widget.AppCompat.Toolbar">
@@ -53,6 +59,15 @@
     <style name="roundedCorners" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">5dp</item>
+    </style>
+
+    <style name="Widget.Bingee.Backdrop" parent="">
+        <item name="android:background">?attr/colorAccent</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Bingee.MaterialCardView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
     </style>
 
 

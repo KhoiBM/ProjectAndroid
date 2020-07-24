@@ -4,7 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     tools:context=".Fragment.CartFragment">
+
+    <LinearLayout
+        android:id="@+id/view_backdrop"
+        style="@style/Widget.Bingee.Backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="80dp"
+        android:paddingBottom="100dp">
+
+        <include layout="@layout/layout_backdrop" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,111 +27,134 @@
 
         <include layout="@layout/layout_app_bar" />
 
-        <RelativeLayout
-            android:id="@+id/layout_empty_cart"
+        <LinearLayout
+            android:id="@+id/cart_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
-            <pl.droidsonroids.gif.GifImageView
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_animation_cartgif"
-                android:layout_centerHorizontal="true"/>
-        </RelativeLayout>
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
-            android:id="@+id/layout_header_cart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp">
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_clean_cart"
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="@string/action_clean_cart" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout_body_cart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/nestedscroll_view_cartlist"
+            <RelativeLayout
+                android:id="@+id/layout_empty_cart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="160dp"
-                android:background="@color/white"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_cart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </androidx.core.widget.NestedScrollView>
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone">
 
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:id="@+id/snack_bar_cart"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_alignBottom="@id/nestedscroll_view_cartlist"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp" />
+                <TextView
+                    android:id="@+id/text_cart_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cart_empty"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_view_checkout"
-                style="@style/CardView.Light"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:elevation="36dp">
+                <pl.droidsonroids.gif.GifImageView
+                    android:layout_width="310dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_cart_empty"
+                    android:src="@drawable/ic_animation_cartgif" />
+            </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:id="@+id/layout_total_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp">
-                        <com.google.android.material.textview.MaterialTextView
-                            style="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:id="@+id/layout_header_cart"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/bin_cart_total"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/cart_total_price"
-                            style="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:inputType="numberDecimal"
-                            android:text="@string/bin_cart_totalprice"
-                            android:layout_alignParentRight="true"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
-                    </RelativeLayout>
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_checkout"
-                        style="@style/Widget.Bingee.Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:text="@string/bin_button_checkout" />
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_clean_cart"
+                                style="?attr/borderlessButtonStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:text="@string/action_clean_cart" />
+                        </RelativeLayout>
 
-                </LinearLayout>
+                        <RelativeLayout
+                            android:id="@+id/layout_body_cart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-            </com.google.android.material.card.MaterialCardView>
-        </RelativeLayout>
+                            <ScrollView
+                                android:id="@+id/nestedscroll_view_cartlist"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="160dp"
+                                android:background="@color/white"
+                                android:paddingStart="4dp"
+                                android:paddingEnd="4dp"
+                                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recycler_view_cart"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+                            </ScrollView>
+
+                            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                                android:id="@+id/snack_bar_cart"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:layout_alignBottom="@id/nestedscroll_view_cartlist"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp" />
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/card_view_checkout"
+                                style="@style/CardView.Light"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp"
+                                android:elevation="36dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <RelativeLayout
+                                        android:id="@+id/layout_total_price"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:layout_marginBottom="8dp">
+
+                                        <com.google.android.material.textview.MaterialTextView
+                                            style="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/bin_cart_total"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/cart_total_price"
+                                            style="@style/MaterialAlertDialog.MaterialComponents.Title.Icon"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentRight="true"
+                                            android:inputType="numberDecimal"
+                                            android:text="@string/bin_cart_totalprice"
+                                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
+                                    </RelativeLayout>
+
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/btn_checkout"
+                                        style="@style/Widget.Bingee.Button"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="80dp"
+                                        android:backgroundTint="@color/colorPrimary"
+                                        android:text="@string/bin_button_checkout" />
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+                        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

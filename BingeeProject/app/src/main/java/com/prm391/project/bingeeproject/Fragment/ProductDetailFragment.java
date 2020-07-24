@@ -1,6 +1,7 @@
 package com.prm391.project.bingeeproject.Fragment;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +43,7 @@ import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
 import com.prm391.project.bingeeproject.Adapter.ProductCardViewHolder;
 import com.prm391.project.bingeeproject.Adapter.ProductDetailCardViewHolder;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Common.NavigationIconClickListener;
 import com.prm391.project.bingeeproject.Databases.CartDAO;
 import com.prm391.project.bingeeproject.Databases.DBHelper;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
@@ -47,6 +51,7 @@ import com.prm391.project.bingeeproject.Interface.ItemClickListener;
 import com.prm391.project.bingeeproject.Model.Order;
 import com.prm391.project.bingeeproject.Model.Product;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.HandleNavMenu;
 import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
 import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.FragmentProductDetailBinding;
@@ -69,6 +74,7 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
     private MaterialButton addToCart,buyNow;
     private Product currentProduct;
     private String productID;
+    private boolean isAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +85,10 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         storageRef = storage.getReference("product");
 
         setHasOptionsMenu(true);
+
+        Bundle bundle = this.getArguments();
+        isAuth = bundle.getBoolean("isAuth");
+        Log.i(TAG, "isAuth" + isAuth);
     }
 
     @Override
@@ -91,6 +101,8 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         setUpToolbar(view);
 
         HandleSearchComponent.handleSearchView(view,getActivity());
+
+        buttonsSetUp(view);
 
         productImage = mBinding.productImage;
         productTitle = mBinding.productTitle;
@@ -109,6 +121,9 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
 
         loadProduct();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.product_detail_grid).setBackgroundResource(R.drawable.corner_cut_grid_background_shape);
+        }
 
         return view;
     }
@@ -149,7 +164,15 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
         }
+
+        toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
+                getContext(),
+                view.findViewById(R.id.product_detail_grid),
+                new AccelerateDecelerateInterpolator(),
+                getContext().getResources().getDrawable(R.drawable.bin_menu),
+                getContext().getResources().getDrawable(R.drawable.ic_close),view));
     }
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -163,6 +186,39 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+    private Button nav_btn_ingredients, nav_btn_furniture, nav_btn_go_home, nav_btn_my_account, nav_btn_cart;
+
+    private void buttonsSetUp(View view) {
+
+        //menu button setup
+
+        nav_btn_go_home = view.findViewById(R.id.nav_btn_go_home);
+        nav_btn_go_home.setOnClickListener(this);
+        nav_btn_ingredients = view.findViewById(R.id.nav_btn_ingredients);
+        nav_btn_ingredients.setOnClickListener(this);
+        nav_btn_furniture = view.findViewById(R.id.nav_btn_furniture);
+        nav_btn_furniture.setOnClickListener(this);
+        nav_btn_cart = view.findViewById(R.id.nav_btn_cart);
+        nav_btn_cart.setOnClickListener(this);
+        nav_btn_my_account = view.findViewById(R.id.nav_btn_my_account);
+        setActionForBtnMyAccount();
+
+        //--------------------------------
+    }
+    private void setActionForBtnMyAccount(){
+        if(isAuth){
+            nav_btn_my_account.setText("MY ACCOUNT");
+            nav_btn_my_account.setOnClickListener(this);
+        }else{
+            nav_btn_my_account.setText("LOGIN");
+            nav_btn_my_account.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) getActivity()).login();
+                }
+            });
+        }
+    }
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -174,6 +230,7 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
                 addToCart("buyNow");
                 break;
         }
+        HandleNavMenu.commonNavigationMenuForCategory(v, getActivity());
     }
 
     private void addToCart(String type) {

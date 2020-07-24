@@ -51,23 +51,6 @@ public class HandleSearchComponent {
             }
         });
 
-
-        searchViewLayout.setSearchBoxListener(new SearchViewLayout.SearchBoxListener() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                Log.d("", "beforeTextChanged: " + s + "," + start + "," + count + "," + after);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d(TAG, "onTextChanged: " + s + "," + start + "," + before + "," + count);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.d(TAG, "afterTextChanged: " + s);
-            }
-        });
     }
     public static void toggleSearch(){
         if (searchViewLayout.isShown()) {

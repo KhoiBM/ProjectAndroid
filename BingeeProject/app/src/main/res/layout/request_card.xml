@@ -7,37 +7,42 @@
     app:cardElevation="8dp"
     app:cardPreventCornerOverlap="true">
 
-    <GridLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:foregroundGravity="center">
-        <TextView
-            android:id="@+id/request_ordinal_numbers"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
-            android:textAppearance="?attr/textAppearanceCaption" />
+        android:layout_height="50dp">
         <TextView
             android:id="@+id/request_title"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
+            android:layout_marginStart="16dp"
             android:text="@string/bin_request_title"
-            android:textAppearance="?attr/textAppearanceCaption" />
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
         <TextView
             android:id="@+id/request_date"
-            android:layout_width="130dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
+            android:layout_marginStart="4dp"
             android:text="@string/bin_request_order_date"
-            android:textAppearance="?attr/textAppearanceCaption" />
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintStart_toEndOf="@+id/request_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </GridLayout>
+        <TextView
+            android:id="@+id/request_status"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="Shipping"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/request_date"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

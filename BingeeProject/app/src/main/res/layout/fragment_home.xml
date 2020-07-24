@@ -4,28 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.HomeFragment">
+    tools:context=".Fragment.HomeFragment"
+    android:background="@color/colorAccent">
+
+    <LinearLayout
+        android:id="@+id/view_backdrop"
+        style="@style/Widget.Bingee.Backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="80dp"
+        android:paddingBottom="100dp">
+
+        <include layout="@layout/layout_backdrop" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-    <include layout="@layout/layout_app_bar"/>
+        <include layout="@layout/layout_app_bar" />
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:paddingStart="@dimen/bin_category_grid_spacing"
-        android:paddingEnd="@dimen/bin_category_grid_spacing"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_category"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/home_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center" />
+            android:background="@color/white"
+            android:elevation="8dp"
+            android:paddingStart="@dimen/bin_category_grid_spacing"
+            android:paddingEnd="@dimen/bin_category_grid_spacing"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </androidx.core.widget.NestedScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_category"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </FrameLayout>

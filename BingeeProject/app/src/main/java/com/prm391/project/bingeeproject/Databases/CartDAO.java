@@ -114,7 +114,7 @@ public class CartDAO<C extends Fragment>{
     private void showSnackbarWithUndoAction(final View view, FragmentActivity activity, String message, final RestorableSQLiteDatabase db, final String undoTag, final String type,Snackbar.Callback callBackForReLoadCart){
        if(type.equals("buyNow")){
            Bundle bundle = new Bundle();
-           ((NavigationHost) activity).navigateTo(new CartFragment(), bundle,true);
+           ((NavigationHost) activity).navigateTo(new CheckoutFragment(), bundle,true);
        }else {
            Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
                    .setAction("Undo", new View.OnClickListener() {

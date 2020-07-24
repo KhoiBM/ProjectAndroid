@@ -52,15 +52,15 @@ public class SearchFragment extends Fragment {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private StorageReference imagesRef;
-    ;
+
     private Timer timer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loadingDialog = new LoadingDialog(getActivity());
-        loadingDialog.startLoadingDialog();
+//        loadingDialog = new LoadingDialog(getActivity());
+//        loadingDialog.startLoadingDialog();
 
         mDatabase = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance("gs://bingee-358c7.appspot.com");
@@ -89,15 +89,15 @@ public class SearchFragment extends Fragment {
 
         loadListProduct();
 
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                loadingDialog.dismissDialog();
-            }
-        };
-
-        timer = new Timer();
-        timer.schedule(task, 1000);
+//        TimerTask task = new TimerTask() {
+//            @Override
+//            public void run() {
+//                loadingDialog.dismissDialog();
+//            }
+//        };
+//
+//        timer = new Timer();
+//        timer.schedule(task, 1000);
         return view;
     }
 
@@ -132,9 +132,9 @@ public class SearchFragment extends Fragment {
                         ((NavigationHost) getActivity()).navigateTo(productDetailFragment, bundle, true);
                     }
                 });
-                if (!TextUtils.isEmpty(holder.productTitle.getText()) & !TextUtils.isEmpty(holder.productPrice.getText())) {
-                    loadingDialog.dismissDialog();
-                }
+//                if (!TextUtils.isEmpty(holder.productTitle.getText()) & !TextUtils.isEmpty(holder.productPrice.getText())) {
+//                    loadingDialog.dismissDialog();
+//                }
             }
 
 

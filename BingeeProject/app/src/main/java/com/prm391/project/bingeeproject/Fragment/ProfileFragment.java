@@ -3,6 +3,7 @@ package com.prm391.project.bingeeproject.Fragment;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +11,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 
@@ -31,8 +35,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Common.NavigationIconClickListener;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.HandleNavMenu;
 import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
 import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.FragmentProfileBinding;
@@ -54,18 +60,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private LoadingDialog loadingDialog;
     private FirebaseDatabase mDatabase;
     private DatabaseReference table_user;
-
-
     private DatePickerDialog.OnDateSetListener setListener;
     private DatePicker datePicker;
+    private boolean isAuth;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        phoneUser = "0387741552";
-        password = "12345678";
 
         mDatabase = FirebaseDatabase.getInstance();
         table_user = mDatabase.getReference("Users");
@@ -74,7 +76,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         Bundle bundle = this.getArguments();
         phoneUser = bundle.getString("phoneUser");
-        password =bundle.getString("password");
+        password = bundle.getString("password");
+        isAuth = bundle.getBoolean("isAuth");
+        Log.i(TAG, "isAuth" + isAuth);
     }
 
     @Override
@@ -86,8 +90,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         setUpToolbar(view);
 
-        HandleSearchComponent.handleSearchView(view,getActivity());
+        HandleSearchComponent.handleSearchView(view, getActivity());
 
+        buttonsSetUp(view);
 
         phoneNumber = mBinding.textInputPhone;
         fullName = mBinding.textInputFullname;
@@ -105,22 +110,35 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         loadingDialog = new LoadingDialog(getActivity());
         loadingDialog.startLoadingDialog();
 
+        loadProfileUser();
+
         createDOBDialog();
 
-        loadProfileUser();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.profile_grid).setBackgroundResource(R.drawable.corner_cut_grid_background_shape);
+        }
 
         return view;
     }
-    private  void createDOBDialog(){
-        Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+    private void createDOBDialog() {
+
 
         mBinding.editTextDob.setShowSoftInputOnFocus(false);
 
         mBinding.editTextDob.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+
+                if(!TextUtils.isEmpty(mBinding.editTextDob.getText().toString().trim())) {
+                    String dateCal[] =  mBinding.editTextDob.getText().toString().trim().split("[\\/]");
+                    calendar.set(Integer.parseInt(dateCal[2]), Integer.parseInt(dateCal[1]), Integer.parseInt(dateCal[0]));
+                } else {
+                    calendar.set(2000, 1, 1);
+                }
+                int year = calendar.get(calendar.YEAR);
+                int month = calendar.get(calendar.MONTH);
+                int day = calendar.get(calendar.DATE);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.ThemeOverlay_Material_Dialog,
                         setListener,year,month,day);
                 datePickerDialog.show();
@@ -329,6 +347,40 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return false;
     }
 
+    private Button nav_btn_ingredients, nav_btn_furniture, nav_btn_go_home, nav_btn_my_account, nav_btn_cart;
+
+    private void buttonsSetUp(View view) {
+
+        //menu button setup
+
+        nav_btn_go_home = view.findViewById(R.id.nav_btn_go_home);
+        nav_btn_go_home.setOnClickListener(this);
+        nav_btn_ingredients = view.findViewById(R.id.nav_btn_ingredients);
+        nav_btn_ingredients.setOnClickListener(this);
+        nav_btn_furniture = view.findViewById(R.id.nav_btn_furniture);
+        nav_btn_furniture.setOnClickListener(this);
+        nav_btn_cart = view.findViewById(R.id.nav_btn_cart);
+        nav_btn_cart.setOnClickListener(this);
+        nav_btn_my_account = view.findViewById(R.id.nav_btn_my_account);
+        setActionForBtnMyAccount();
+
+        //--------------------------------
+    }
+    private void setActionForBtnMyAccount(){
+        if(isAuth){
+            nav_btn_my_account.setText("MY ACCOUNT");
+            nav_btn_my_account.setOnClickListener(this);
+        }else{
+            nav_btn_my_account.setText("LOGIN");
+            nav_btn_my_account.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) getActivity()).login();
+                }
+            });
+        }
+    }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -337,12 +389,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 update(v);
                 break;
         }
+        HandleNavMenu.commonNavigationMenuForCategory(v, getActivity());
     }
 
-    private void goBack(View v) {
-        Bundle bundle = new Bundle();
-        ((NavigationHost) getActivity()).navigateTo(new HomeFragment(),bundle, true);
-    }
+//    private void goBack(View v) {
+//        Bundle bundle = new Bundle();
+//        ((NavigationHost) getActivity()).navigateTo(new HomeFragment(), bundle, true);
+//    }
 
     private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.app_bar);
@@ -350,6 +403,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
         }
+
+        toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
+                getContext(),
+                view.findViewById(R.id.profile_grid),
+                new AccelerateDecelerateInterpolator(),
+                getContext().getResources().getDrawable(R.drawable.bin_menu),
+                getContext().getResources().getDrawable(R.drawable.ic_close),view));
     }
 
     @Override
@@ -360,7 +420,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Utils.handleOnOptionsItemSelected(item,getActivity());
+        Utils.handleOnOptionsItemSelected(item, getActivity());
         return super.onOptionsItemSelected(item);
     }
 
@@ -370,46 +430,43 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         String _fullName = fullName.getEditText().getText().toString().trim();
         String _address = address.getEditText().getText().toString().trim();
         String _email = email.getEditText().getText().toString().trim();
+        String _dob = dob.getEditText().getText().toString().trim();
         fullName.setErrorEnabled(false);
         address.setErrorEnabled(false);
         email.setErrorEnabled(false);
+        dob.setErrorEnabled(false);
 
-        if (checkValidFullName(_fullName) && checkValidAddress(_address) && checkValidEmail(_email)) {
+        if (checkValidFullName(_fullName) & checkValidAddress(_address) & checkValidEmail(_email) & checkDOB(_dob)) {
             return true;
         }
         return false;
 
     }
 
+    private boolean checkDOB(String _dob) {
+        if (TextUtils.isEmpty(_dob)) {
+            dob.setError("This field can't be empty");
+            dob.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
     private boolean checkValidFullName(String _fullName) {
-//        Pattern pattern = Pattern.compile("^[A-Za-z]{1,20}$");
-//        Matcher matcher = pattern.matcher(_fullName);
-        if (TextUtils.isEmpty(_fullName) ) {
+        if (TextUtils.isEmpty(_fullName)) {
             fullName.setError("Full name field can't be empty");
             fullName.requestFocus();
             return false;
         }
-//        if (!matcher.matches()) {
-//            fullName.setError("Invalid Full name pattern");
-//            fullName.requestFocus();
-//            return false;
-//        }
         return true;
     }
 
     private boolean checkValidAddress(String _address) {
-//        Pattern pattern = Pattern.compile("^[A-Za-z0-9]{1,20}$");
-//        Matcher matcher = pattern.matcher(_address);
         if (TextUtils.isEmpty(_address)) {
             address.setError("Address field can't be empty");
             address.requestFocus();
             return false;
         }
-//        if (!matcher.matches()) {
-//            address.setError("Invalid Address pattern");
-//            address.requestFocus();
-//            return false;
-//        }
         return true;
     }
 
@@ -428,7 +485,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
         return true;
     }
-
 
 
 }

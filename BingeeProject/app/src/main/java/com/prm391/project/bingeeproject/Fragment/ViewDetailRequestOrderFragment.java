@@ -1,5 +1,6 @@
 package com.prm391.project.bingeeproject.Fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,12 +10,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -32,13 +35,14 @@ import com.google.firebase.storage.StorageReference;
 import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
 import com.prm391.project.bingeeproject.Adapter.ItemCardRecyclerViewAdapter;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Common.NavigationIconClickListener;
 import com.prm391.project.bingeeproject.Databases.CartDAO;
 import com.prm391.project.bingeeproject.Model.Order;
 import com.prm391.project.bingeeproject.Model.Request;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.HandleNavMenu;
 import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
 import com.prm391.project.bingeeproject.Utils.Utils;
-import com.prm391.project.bingeeproject.databinding.FragmentCheckoutBinding;
 import com.prm391.project.bingeeproject.databinding.FragmentViewDetailRequestOrderBinding;
 
 import java.text.SimpleDateFormat;
@@ -47,7 +51,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class ViewDetailRequestOrderFragment extends Fragment {
+public class ViewDetailRequestOrderFragment extends Fragment implements View.OnClickListener {
 
 
     private static final String TAG = ViewDetailRequestOrderFragment.class.getSimpleName();
@@ -64,6 +68,7 @@ public class ViewDetailRequestOrderFragment extends Fragment {
     private FirebaseDatabase mDatabase;
     private String phoneUser;
     private String requestId;
+    private boolean isAuth;
 
 
     @Override
@@ -79,6 +84,10 @@ public class ViewDetailRequestOrderFragment extends Fragment {
 
         mDatabase = FirebaseDatabase.getInstance();
 
+        Bundle bundle = this.getArguments();
+        isAuth = bundle.getBoolean("isAuth");
+        Log.i(TAG, "isAuth" + isAuth);
+
     }
 
     @Override
@@ -92,6 +101,7 @@ public class ViewDetailRequestOrderFragment extends Fragment {
 
         HandleSearchComponent.handleSearchView(view,getActivity());
 
+        buttonsSetUp(view);
 
         totalPrice = mBinding.cartTotalPrice;
         phoneLayout = mBinding.textInputPhone;
@@ -117,7 +127,11 @@ public class ViewDetailRequestOrderFragment extends Fragment {
         requestId = bundle.getString("requestId");
 
         loadInformationRequestOrder();
-//        loadListCart();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.view_detail_order_grid).setBackgroundResource(R.drawable.corner_cut_grid_background_shape);
+        }
+
         return view;
     }
 
@@ -147,7 +161,6 @@ public class ViewDetailRequestOrderFragment extends Fragment {
                         System.out.println(o.toString());
                     }
 
-
                 }
             }
 
@@ -160,7 +173,7 @@ public class ViewDetailRequestOrderFragment extends Fragment {
 
 
     private void loadListCart() {
-        adapter = new ItemCardRecyclerViewAdapter<>(getView(), getActivity(), carts, null, storageRef, ViewDetailRequestOrderFragment.this, R.layout.item_in_cart_request_order_card);
+        adapter = new ItemCardRecyclerViewAdapter<>(getView(), getActivity(), carts, null, storageRef, ViewDetailRequestOrderFragment.this, R.layout.item_in_view_detail_order_card);
         recyclerView.setAdapter(adapter);
     }
 
@@ -169,6 +182,47 @@ public class ViewDetailRequestOrderFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
+        }
+
+        toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
+                getContext(),
+                view.findViewById(R.id.view_detail_order_grid),
+                new AccelerateDecelerateInterpolator(),
+                getContext().getResources().getDrawable(R.drawable.bin_menu),
+                getContext().getResources().getDrawable(R.drawable.ic_close),view));
+    }
+
+    private Button nav_btn_go_home, nav_btn_ingredients, nav_btn_furniture, nav_btn_cart, nav_btn_my_account;
+
+    private void buttonsSetUp(View view) {
+        //menu button setup
+
+        nav_btn_go_home = view.findViewById(R.id.nav_btn_go_home);
+        nav_btn_go_home.setOnClickListener(this);
+        nav_btn_ingredients = view.findViewById(R.id.nav_btn_ingredients);
+        nav_btn_ingredients.setOnClickListener(this);
+        nav_btn_furniture = view.findViewById(R.id.nav_btn_furniture);
+        nav_btn_furniture.setOnClickListener(this);
+        nav_btn_cart = view.findViewById(R.id.nav_btn_cart);
+        nav_btn_cart.setOnClickListener(this);
+        nav_btn_my_account = view.findViewById(R.id.nav_btn_my_account);
+        setActionForBtnMyAccount();
+
+        //--------------------------------
+    }
+
+    private void setActionForBtnMyAccount(){
+        if(isAuth){
+            nav_btn_my_account.setText("MY ACCOUNT");
+            nav_btn_my_account.setOnClickListener(this);
+        }else{
+            nav_btn_my_account.setText("LOGIN");
+            nav_btn_my_account.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) getActivity()).login();
+                }
+            });
         }
     }
 
@@ -185,4 +239,8 @@ public class ViewDetailRequestOrderFragment extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        HandleNavMenu.commonNavigationMenuForCategory(v, getActivity());
+    }
 }

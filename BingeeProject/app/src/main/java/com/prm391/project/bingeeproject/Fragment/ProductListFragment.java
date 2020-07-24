@@ -3,6 +3,7 @@ package com.prm391.project.bingeeproject.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +47,7 @@ import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
 import com.prm391.project.bingeeproject.Adapter.ProductCardViewHolder;
 import com.prm391.project.bingeeproject.Common.LoginActivity;
 import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Common.NavigationIconClickListener;
 import com.prm391.project.bingeeproject.Common.OnBoardingActivity;
 import com.prm391.project.bingeeproject.Common.SplashActivity;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
@@ -51,6 +55,7 @@ import com.prm391.project.bingeeproject.Interface.ItemClickListener;
 import com.prm391.project.bingeeproject.Model.Category;
 import com.prm391.project.bingeeproject.Model.Product;
 import com.prm391.project.bingeeproject.R;
+import com.prm391.project.bingeeproject.Utils.HandleNavMenu;
 import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
 import com.prm391.project.bingeeproject.Utils.Utils;
 
@@ -61,7 +66,7 @@ import java.util.TimerTask;
 import xyz.sahildave.widget.SearchViewLayout;
 
 
-public class ProductListFragment extends Fragment {
+public class ProductListFragment extends Fragment implements View.OnClickListener {
 
 
     private static final String TAG = ProductListFragment.class.getSimpleName();
@@ -78,6 +83,7 @@ public class ProductListFragment extends Fragment {
     private Timer timer;
     private String categoryID;
     private String searchKeyword;
+    private boolean isAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +98,9 @@ public class ProductListFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        Bundle bundle = this.getArguments();
+        isAuth = bundle.getBoolean("isAuth");
+        Log.i(TAG, "isAuth" + isAuth);
     }
 
     @Override
@@ -107,6 +116,8 @@ public class ProductListFragment extends Fragment {
         Bundle bundle = this.getArguments();
         categoryID = bundle.getString("categoryID");
         searchKeyword = bundle.getString("searchKeyword");
+
+        buttonsSetUp(view);
 
         if (!TextUtils.isEmpty(searchKeyword)) {
             HandleSearchComponent.showSearchAndSetKeyword(searchKeyword);
@@ -140,6 +151,10 @@ public class ProductListFragment extends Fragment {
 
         timer = new Timer();
         timer.schedule(task, 1000);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.product_list_grid).setBackgroundResource(R.drawable.corner_cut_grid_background_shape);
+        }
         return view;
     }
 
@@ -154,29 +169,29 @@ public class ProductListFragment extends Fragment {
             protected void onBindViewHolder(@NonNull final ProductCardViewHolder holder, int position, @NonNull final Product model) {
 
 
-                    holder.productTitle.setText(model.getmName());
-                    holder.productPrice.setText(model.getmPrice() + "$");
+                holder.productTitle.setText(model.getmName());
+                holder.productPrice.setText(model.getmPrice() + "$");
 
-                    imagesRef = storageRef.child(model.getmImage());
+                imagesRef = storageRef.child(model.getmImage());
 
-                    if (getActivity() != null) {
-                        GlideApp.with(getActivity()).load(imagesRef).into(holder.productImage);
-                    }
-
-                    holder.setItemClickListener(new ItemClickListener() {
-                        @Override
-                        public void onClick(View view, int position, boolean isLongClick) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("productID", adapter.getRef(position).getKey());
-                            ProductDetailFragment productDetailFragment = new ProductDetailFragment();
-//                        productDetailFragment.setArguments(bundle);
-                            ((NavigationHost) getActivity()).navigateTo(productDetailFragment, bundle, true);
-                        }
-                    });
-                    if (!TextUtils.isEmpty(holder.productTitle.getText()) & !TextUtils.isEmpty(holder.productPrice.getText())) {
-                        loadingDialog.dismissDialog();
-                    }
+                if (getActivity() != null) {
+                    GlideApp.with(getActivity()).load(imagesRef).into(holder.productImage);
                 }
+
+                holder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("productID", adapter.getRef(position).getKey());
+                        ProductDetailFragment productDetailFragment = new ProductDetailFragment();
+//                        productDetailFragment.setArguments(bundle);
+                        ((NavigationHost) getActivity()).navigateTo(productDetailFragment, bundle, true);
+                    }
+                });
+                if (!TextUtils.isEmpty(holder.productTitle.getText()) & !TextUtils.isEmpty(holder.productPrice.getText())) {
+                    loadingDialog.dismissDialog();
+                }
+            }
 
 
             @NonNull
@@ -189,9 +204,7 @@ public class ProductListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void loadDataForViewHolder(){
 
-    }
     @Override
     public void onStart() {
         super.onStart();
@@ -202,6 +215,7 @@ public class ProductListFragment extends Fragment {
     public void onStop() {
         super.onStop();
         adapter.stopListening();
+
     }
 
     private void setUpToolbar(View view) {
@@ -210,7 +224,15 @@ public class ProductListFragment extends Fragment {
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
         }
+
+        toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
+                getContext(),
+                view.findViewById(R.id.product_list_grid),
+                new AccelerateDecelerateInterpolator(),
+                getContext().getResources().getDrawable(R.drawable.bin_menu),
+                getContext().getResources().getDrawable(R.drawable.ic_close),view));
     }
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -222,5 +244,51 @@ public class ProductListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         Utils.handleOnOptionsItemSelected(item, getActivity());
         return super.onOptionsItemSelected(item);
+    }
+
+    private Button nav_btn_ingredients, nav_btn_furniture, nav_btn_go_home, nav_btn_my_account, nav_btn_cart;
+
+    private void buttonsSetUp(View view) {
+
+        //menu button setup
+
+        HandleNavMenu.setupButton(this, view, nav_btn_go_home, R.id.nav_btn_go_home);
+        if(TextUtils.isEmpty(categoryID)){
+            HandleNavMenu.setupButton(this, view, nav_btn_ingredients, R.id.nav_btn_ingredients);
+            HandleNavMenu.setupButton(this, view, nav_btn_furniture, R.id.nav_btn_furniture);
+        }else {
+            switch (categoryID) {
+                case "1":
+                    HandleNavMenu.setupButton(this, view, nav_btn_furniture, R.id.nav_btn_furniture);
+                    break;
+                case "2":
+                    HandleNavMenu.setupButton(this, view, nav_btn_ingredients, R.id.nav_btn_ingredients);
+                    break;
+            }
+        }
+        HandleNavMenu.setupButton(this, view, nav_btn_cart, R.id.nav_btn_cart);
+        nav_btn_my_account = view.findViewById(R.id.nav_btn_my_account);
+        setActionForBtnMyAccount();
+
+        //--------------------------------
+    }
+
+    private void setActionForBtnMyAccount(){
+        if(isAuth){
+            nav_btn_my_account.setText("MY ACCOUNT");
+            nav_btn_my_account.setOnClickListener(this);
+        }else{
+            nav_btn_my_account.setText("LOGIN");
+            nav_btn_my_account.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) getActivity()).login();
+                }
+            });
+        }
+    }
+    @Override
+    public void onClick(View v) {
+        HandleNavMenu.commonNavigationMenuForCategory(v, getActivity());
     }
 }

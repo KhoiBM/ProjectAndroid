@@ -66,9 +66,10 @@
     <string name="bin_request_order_date">18/07/2020 18:05:30</string>
     <string name="bin_request_title">MCWnh0LqYIRE13XFc0v</string>
     <string name="bin_request_ordinal_numbers">1.</string>
-    <string name="bin_request_order_list_title">List Of Request Order</string>
+    <string name="bin_request_order_list_title">History Order</string>
     <string name="status_title">Status</string>
     <string name="bin_hint_place">Place</string>
     <string name="bin_hint_shipping">Shipping</string>
     <string name="bin_hint_Finish">Finish</string>
+    <string name="cart_empty">Cart Empty</string>
 </resources>

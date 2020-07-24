@@ -20,23 +20,30 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
     private static final String TAG = MainActivity.class.getSimpleName();
     private String phoneUser;
     private String password;
+    private boolean isAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
         phoneUser = intent.getStringExtra("phoneUser");
         password = intent.getStringExtra("password");
+        isAuth = intent.getBooleanExtra("isAuth",false);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isAuth",isAuth);
+        HomeFragment homeFragment = new HomeFragment();
+        homeFragment.setArguments(bundle);
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, new HomeFragment())
+                    .add(R.id.container, homeFragment)
                     .commit();
         }
         Log.i(TAG, "phoneUser: " + phoneUser);
         Log.i(TAG, "password: " + password);
+        Log.i(TAG, "isAuth" + isAuth);
     }
 
     /**
@@ -50,9 +57,12 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
 
         Log.i(TAG, "phoneUser: " + phoneUser);
         Log.i(TAG, "password: " + password);
+        Log.i(TAG, "isAuth" + isAuth);
 
         bundle.putString("phoneUser", phoneUser);
         bundle.putString("password", password);
+        bundle.putBoolean("isAuth",isAuth);
+
         fragment.setArguments(bundle);
         FragmentTransaction transaction =
                 getSupportFragmentManager()
@@ -71,6 +81,12 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void login() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
 }

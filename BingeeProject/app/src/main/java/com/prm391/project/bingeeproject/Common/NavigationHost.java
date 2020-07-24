@@ -11,4 +11,5 @@ public interface NavigationHost {
      */
     void navigateTo(Fragment fragment, Bundle bundle, boolean addToBackstack);
     void logout();
+    void login();
 }

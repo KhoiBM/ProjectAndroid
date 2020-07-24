@@ -1,32 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.ProductListFragment">
+    tools:context=".Fragment.ProductListFragment"
+    android:background="@color/colorAccent">
+
+    <LinearLayout
+        android:id="@+id/view_backdrop"
+        style="@style/Widget.Bingee.Backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="80dp"
+        android:paddingBottom="100dp">
+
+        <include layout="@layout/layout_backdrop" />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <include layout="@layout/layout_app_bar"/>
+        <include layout="@layout/layout_app_bar" />
 
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:paddingStart="@dimen/bin_product_grid_spacing"
-        android:paddingEnd="@dimen/bin_product_grid_spacing"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_product"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/product_list_grid"
+            style="@style/ShapeAppearanceOverlay.Bingee.MaterialCardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:elevation="8dp"
+            android:paddingStart="@dimen/bin_product_grid_spacing"
+            android:paddingEnd="@dimen/bin_product_grid_spacing"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </androidx.core.widget.NestedScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_product"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
 </FrameLayout>
