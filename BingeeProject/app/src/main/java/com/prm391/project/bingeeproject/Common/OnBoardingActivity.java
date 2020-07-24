@@ -89,7 +89,7 @@ public class OnBoardingActivity extends AppCompatActivity {
     };
 
     public void skip(View view) {
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 
