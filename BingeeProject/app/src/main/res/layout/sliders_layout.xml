@@ -13,8 +13,7 @@
     <ImageView
         android:id="@+id/slider_image"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:srcCompat="@drawable/pizzastein3" />
+        android:layout_height="250dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -130,6 +130,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if(!TextUtils.isEmpty(mBinding.editTextDob.getText().toString().trim())) {
                     String dateCal[] =  mBinding.editTextDob.getText().toString().trim().split("[\\/]");
                     calendar.set(Integer.parseInt(dateCal[2]), Integer.parseInt(dateCal[1]), Integer.parseInt(dateCal[0]));
+
                 } else {
                     calendar.set(2000, 1, 1);
                 }
@@ -145,7 +146,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         setListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month + 1;
                 String date = dayOfMonth + "/" + month + "/" + year;
                 dob.getEditText().setText(date);
             }

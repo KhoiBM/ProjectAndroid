@@ -155,6 +155,7 @@ public class SignUpActivity extends AppCompatActivity {
 //            startActivity(intent, options.toBundle());
 //        } else {
             startActivity(intent);
+        finish();
         overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
 
 //        }

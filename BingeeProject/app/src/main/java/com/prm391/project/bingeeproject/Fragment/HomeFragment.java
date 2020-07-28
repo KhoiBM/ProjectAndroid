@@ -42,10 +42,7 @@ import com.prm391.project.bingeeproject.databinding.FragmentHomeBinding;
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
-
-
     private static final String TAG = HomeFragment.class.getSimpleName();
-
     private FirebaseDatabase mDatabase;
     private DatabaseReference categoryRef;
     private RecyclerView recyclerView;
@@ -56,8 +53,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private FragmentHomeBinding homeBinding;
     private LoadingDialog loadingDialog;
     private boolean isAuth;
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,12 +82,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         HandleSearchComponent.handleSearchView(view, getActivity());
 
-
         mDatabase = FirebaseDatabase.getInstance();
         categoryRef = mDatabase.getReference().child("Category");
 
         buttonsSetUp(view);
-
 
         recyclerView = homeBinding.recyclerViewCategory;
         recyclerView.setHasFixedSize(false);
@@ -108,7 +101,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             view.findViewById(R.id.home_grid).setBackgroundResource(R.drawable.corner_cut_grid_background_shape);
         }
-
 
         return view;
     }
@@ -147,11 +139,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     }
                 });
 
-
+                loadingDialog.dismissDialog();
             }
         };
         recyclerView.setAdapter(adapter);
-        loadingDialog.dismissDialog();
+
     }
 
     @Override
