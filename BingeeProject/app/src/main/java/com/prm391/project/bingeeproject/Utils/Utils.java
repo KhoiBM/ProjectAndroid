@@ -15,10 +15,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Interface.NavigationHost;
 import com.prm391.project.bingeeproject.Fragment.CartFragment;
-import com.prm391.project.bingeeproject.Fragment.HomeFragment;
-import com.prm391.project.bingeeproject.Fragment.ProductListFragment;
 import com.prm391.project.bingeeproject.R;
 
 public class Utils {

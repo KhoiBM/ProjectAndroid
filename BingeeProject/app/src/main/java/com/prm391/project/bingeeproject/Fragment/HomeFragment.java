@@ -1,8 +1,5 @@
 package com.prm391.project.bingeeproject.Fragment;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -10,15 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextUtils;
-import android.transition.TransitionManager;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,13 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -41,10 +29,8 @@ import com.google.firebase.storage.StorageReference;
 import com.prm391.project.bingeeproject.Adapter.CategoryCardViewHolder;
 import com.prm391.project.bingeeproject.Adapter.GlideApp;
 import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
-import com.prm391.project.bingeeproject.Common.LoginActivity;
-import com.prm391.project.bingeeproject.Common.NavigationHost;
-import com.prm391.project.bingeeproject.Common.NavigationIconClickListener;
-import com.prm391.project.bingeeproject.Common.SignUpActivity;
+import com.prm391.project.bingeeproject.Interface.NavigationHost;
+import com.prm391.project.bingeeproject.Utils.NavigationIconClickListener;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
 import com.prm391.project.bingeeproject.Interface.ItemClickListener;
 import com.prm391.project.bingeeproject.Model.Category;
@@ -53,13 +39,6 @@ import com.prm391.project.bingeeproject.Utils.HandleNavMenu;
 import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
 import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.FragmentHomeBinding;
-import com.prm391.project.bingeeproject.databinding.FragmentProductDetailBinding;
-import com.prm391.project.bingeeproject.databinding.LayoutBackdropBinding;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
-import xyz.sahildave.widget.SearchViewLayout;
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -74,9 +53,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private StorageReference imagesRef;
-    FragmentHomeBinding homeBinding;
+    private FragmentHomeBinding homeBinding;
     private LoadingDialog loadingDialog;
-    private Timer timer;
     private boolean isAuth;
 
 
@@ -105,7 +83,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         homeBinding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = homeBinding.getRoot();
 
-
         setUpToolbar(view);
 
         HandleSearchComponent.handleSearchView(view, getActivity());
@@ -132,15 +109,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             view.findViewById(R.id.home_grid).setBackgroundResource(R.drawable.corner_cut_grid_background_shape);
         }
 
-                TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                loadingDialog.dismissDialog();
-            }
-        };
-
-        timer = new Timer();
-        timer.schedule(task, 1000);
 
         return view;
     }
@@ -174,19 +142,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     public void onClick(View view, int position, boolean isLongClick) {
                         Bundle bundle = new Bundle();
                         bundle.putString("categoryID", adapter.getRef(position).getKey());
-
                         ProductListFragment productListFragment = new ProductListFragment();
-//                        productListFragment.setArguments(bundle);
-
                         ((NavigationHost) getActivity()).navigateTo(productListFragment, bundle, true);
                     }
                 });
-                if (!TextUtils.isEmpty(holder.categoryTitle.getText())) {
-                    loadingDialog.dismissDialog();
-                }
+
+
             }
         };
         recyclerView.setAdapter(adapter);
+        loadingDialog.dismissDialog();
     }
 
     @Override
@@ -226,11 +191,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         //--------------------------------
     }
-    private void setActionForBtnMyAccount(){
-        if(isAuth){
+
+    private void setActionForBtnMyAccount() {
+        if (isAuth) {
             nav_btn_my_account.setText("MY ACCOUNT");
             nav_btn_my_account.setOnClickListener(this);
-        }else{
+        } else {
             nav_btn_my_account.setText("LOGIN");
             nav_btn_my_account.setOnClickListener(new View.OnClickListener() {
                 @Override

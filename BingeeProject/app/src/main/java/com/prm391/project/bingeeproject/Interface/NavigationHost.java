@@ -1,4 +1,4 @@
-package com.prm391.project.bingeeproject.Common;
+package com.prm391.project.bingeeproject.Interface;
 
 import android.os.Bundle;
 

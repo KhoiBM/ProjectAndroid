@@ -4,15 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Interface.NavigationHost;
 import com.prm391.project.bingeeproject.Fragment.CartFragment;
 import com.prm391.project.bingeeproject.Fragment.HomeFragment;
 import com.prm391.project.bingeeproject.Fragment.MyAccountFragment;
 import com.prm391.project.bingeeproject.Fragment.ProductListFragment;
-import com.prm391.project.bingeeproject.Fragment.ProfileFragment;
 import com.prm391.project.bingeeproject.R;
 
 public class HandleNavMenu {

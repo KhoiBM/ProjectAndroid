@@ -1,16 +1,13 @@
 package com.prm391.project.bingeeproject.Utils;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.prm391.project.bingeeproject.Common.NavigationHost;
-import com.prm391.project.bingeeproject.Fragment.HomeFragment;
+import com.prm391.project.bingeeproject.Interface.NavigationHost;
 import com.prm391.project.bingeeproject.Fragment.ProductListFragment;
 import com.prm391.project.bingeeproject.Fragment.SearchFragment;
 import com.prm391.project.bingeeproject.R;
@@ -59,6 +56,12 @@ public class HandleSearchComponent {
             searchViewLayout.setVisibility(View.VISIBLE);
 
         }
+    }
+    public static void showSearch(){
+        searchViewLayout.setVisibility(View.VISIBLE);
+    }
+    public static void hideSearch(){
+        searchViewLayout.setVisibility(View.GONE);
     }
     public static void showSearchAndSetKeyword(String searchKeyword) {
         searchViewLayout.setVisibility(View.VISIBLE);

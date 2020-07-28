@@ -1,17 +1,14 @@
-package com.prm391.project.bingeeproject.Common;
+package com.prm391.project.bingeeproject.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -25,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
-import com.prm391.project.bingeeproject.Model.User;
 import com.prm391.project.bingeeproject.R;
 import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.ActivityLoginBinding;

@@ -1,4 +1,4 @@
-package com.prm391.project.bingeeproject.Common;
+package com.prm391.project.bingeeproject.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -7,13 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.WindowManager;
 
 import com.prm391.project.bingeeproject.Fragment.HomeFragment;
-import com.prm391.project.bingeeproject.Fragment.ProfileFragment;
+import com.prm391.project.bingeeproject.Interface.NavigationHost;
 import com.prm391.project.bingeeproject.R;
-
-import java.util.regex.Matcher;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost {
 

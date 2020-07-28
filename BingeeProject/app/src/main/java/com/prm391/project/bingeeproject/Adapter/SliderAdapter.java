@@ -22,9 +22,9 @@ public class SliderAdapter extends PagerAdapter {
     LayoutInflater layoutInflater;
     private SlidersLayoutBinding mBinding;
     int images[]={
-            R.drawable.essential_baking_ingredients,
-            R.drawable.pizzastein3,
-            R.drawable.takeaway_pana
+            R.drawable.ingredients,
+            R.drawable.furniture,
+            R.drawable.delivery
     };
     int headings[]={
             R.string.first_slide_title,

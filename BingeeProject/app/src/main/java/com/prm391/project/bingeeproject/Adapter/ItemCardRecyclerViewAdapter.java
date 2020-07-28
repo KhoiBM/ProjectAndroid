@@ -1,7 +1,6 @@
 package com.prm391.project.bingeeproject.Adapter;
 
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +16,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
-import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Interface.NavigationHost;
 import com.prm391.project.bingeeproject.Databases.CartDAO;
-import com.prm391.project.bingeeproject.Fragment.CartFragment;
 import com.prm391.project.bingeeproject.Fragment.ProductDetailFragment;
 import com.prm391.project.bingeeproject.Interface.ItemClickListener;
 import com.prm391.project.bingeeproject.Model.Order;
 import com.prm391.project.bingeeproject.Model.Product;
-import com.prm391.project.bingeeproject.R;
 import com.prm391.project.bingeeproject.Utils.Utils;
 
 import org.jetbrains.annotations.NotNull;

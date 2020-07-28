@@ -3,19 +3,11 @@ package com.prm391.project.bingeeproject.Fragment;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -28,16 +20,13 @@ import com.google.firebase.storage.StorageReference;
 import com.prm391.project.bingeeproject.Adapter.GlideApp;
 import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
 import com.prm391.project.bingeeproject.Adapter.ProductCardViewHolder;
-import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Interface.NavigationHost;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
 import com.prm391.project.bingeeproject.Interface.ItemClickListener;
 import com.prm391.project.bingeeproject.Model.Product;
 import com.prm391.project.bingeeproject.R;
-import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
-import com.prm391.project.bingeeproject.Utils.Utils;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class SearchFragment extends Fragment {

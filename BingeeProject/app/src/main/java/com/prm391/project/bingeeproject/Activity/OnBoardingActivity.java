@@ -1,4 +1,4 @@
-package com.prm391.project.bingeeproject.Common;
+package com.prm391.project.bingeeproject.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;

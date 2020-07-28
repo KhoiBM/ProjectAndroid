@@ -22,11 +22,9 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -34,8 +32,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
 import com.prm391.project.bingeeproject.Adapter.ItemCardRecyclerViewAdapter;
-import com.prm391.project.bingeeproject.Common.NavigationHost;
-import com.prm391.project.bingeeproject.Common.NavigationIconClickListener;
+import com.prm391.project.bingeeproject.Interface.NavigationHost;
+import com.prm391.project.bingeeproject.Utils.NavigationIconClickListener;
 import com.prm391.project.bingeeproject.Databases.CartDAO;
 import com.prm391.project.bingeeproject.Model.Order;
 import com.prm391.project.bingeeproject.Model.Request;
@@ -45,11 +43,8 @@ import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
 import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.FragmentViewDetailRequestOrderBinding;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class ViewDetailRequestOrderFragment extends Fragment implements View.OnClickListener {
 

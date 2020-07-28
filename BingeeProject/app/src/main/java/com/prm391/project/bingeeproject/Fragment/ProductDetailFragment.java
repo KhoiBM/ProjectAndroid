@@ -1,6 +1,5 @@
 package com.prm391.project.bingeeproject.Fragment;
 
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -8,8 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,32 +19,19 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.prm391.project.bingeeproject.Adapter.GridItemDecoration;
-import com.prm391.project.bingeeproject.Adapter.ProductCardViewHolder;
-import com.prm391.project.bingeeproject.Adapter.ProductDetailCardViewHolder;
-import com.prm391.project.bingeeproject.Common.NavigationHost;
-import com.prm391.project.bingeeproject.Common.NavigationIconClickListener;
+import com.prm391.project.bingeeproject.Interface.NavigationHost;
+import com.prm391.project.bingeeproject.Utils.NavigationIconClickListener;
 import com.prm391.project.bingeeproject.Databases.CartDAO;
-import com.prm391.project.bingeeproject.Databases.DBHelper;
-import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
-import com.prm391.project.bingeeproject.Interface.ItemClickListener;
 import com.prm391.project.bingeeproject.Model.Order;
 import com.prm391.project.bingeeproject.Model.Product;
 import com.prm391.project.bingeeproject.R;
@@ -55,10 +39,6 @@ import com.prm391.project.bingeeproject.Utils.HandleNavMenu;
 import com.prm391.project.bingeeproject.Utils.HandleSearchComponent;
 import com.prm391.project.bingeeproject.Utils.Utils;
 import com.prm391.project.bingeeproject.databinding.FragmentProductDetailBinding;
-import com.prm391.project.bingeeproject.databinding.FragmentProfileBinding;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ProductDetailFragment extends Fragment implements View.OnClickListener {
 

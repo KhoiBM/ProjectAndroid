@@ -1,4 +1,4 @@
-package com.prm391.project.bingeeproject.Common;
+package com.prm391.project.bingeeproject.Utils;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -7,7 +7,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;

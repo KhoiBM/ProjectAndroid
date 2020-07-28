@@ -18,11 +18,10 @@ import androidx.fragment.app.FragmentManager;
 
 import com.github.yaa110.db.RestorableSQLiteDatabase;
 import com.google.android.material.snackbar.Snackbar;
-import com.prm391.project.bingeeproject.Common.NavigationHost;
+import com.prm391.project.bingeeproject.Interface.NavigationHost;
 import com.prm391.project.bingeeproject.Fragment.CartFragment;
 import com.prm391.project.bingeeproject.Fragment.CheckoutFragment;
 import com.prm391.project.bingeeproject.Model.Order;
-import com.prm391.project.bingeeproject.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

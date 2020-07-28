@@ -1,8 +1,6 @@
 package com.prm391.project.bingeeproject.Fragment;
 
 import android.app.DatePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -26,7 +24,6 @@ import android.widget.RadioButton;
 import androidx.annotation.NonNull;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,8 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.prm391.project.bingeeproject.Common.NavigationHost;
-import com.prm391.project.bingeeproject.Common.NavigationIconClickListener;
+import com.prm391.project.bingeeproject.Interface.NavigationHost;
+import com.prm391.project.bingeeproject.Utils.NavigationIconClickListener;
 import com.prm391.project.bingeeproject.Dialog.LoadingDialog;
 import com.prm391.project.bingeeproject.R;
 import com.prm391.project.bingeeproject.Utils.HandleNavMenu;

@@ -1,4 +1,4 @@
-package com.prm391.project.bingeeproject.Common;
+package com.prm391.project.bingeeproject.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,13 +12,10 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.prm391.project.bingeeproject.R;
 
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.regex.Matcher;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -68,18 +65,18 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 onBoardingScreen =getSharedPreferences("onBoardingScreen",MODE_PRIVATE);
                 boolean isFirstTime =onBoardingScreen.getBoolean("firstTime",true);
-                if(isFirstTime){
-                    SharedPreferences.Editor editor = onBoardingScreen.edit();
-                    editor.putBoolean("firstTime",false);
-                    editor.commit();
+//                if(isFirstTime){
+//                    SharedPreferences.Editor editor = onBoardingScreen.edit();
+//                    editor.putBoolean("firstTime",false);
+//                    editor.commit();
                     Intent i = new Intent(SplashActivity.this, OnBoardingActivity.class);
                     startActivity(i);
                     finish();
-                }else{
-                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(i);
-                    finish();
-                }
+//                }else{
+//                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
+//                    startActivity(i);
+//                    finish();
+//                }
             }
         };
 

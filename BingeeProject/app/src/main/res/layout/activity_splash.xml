@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:orientation="vertical"
-    tools:context=".Common.SplashActivity">
+    tools:context=".Activity.SplashActivity">
 
     <TextView
         android:id="@+id/tvBrandName"
