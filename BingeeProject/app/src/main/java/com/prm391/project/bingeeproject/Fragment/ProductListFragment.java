@@ -115,8 +115,8 @@ public class ProductListFragment extends Fragment implements View.OnClickListene
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        int largePadding = getResources().getDimensionPixelSize(R.dimen.bin_category_grid_spacing);
-        int smallPadding = getResources().getDimensionPixelSize(R.dimen.bin_category_grid_spacing_small);
+        int largePadding = getResources().getDimensionPixelSize(R.dimen.bin_product_grid_spacing);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.bin_product_grid_spacing_small);
         recyclerView.addItemDecoration(new GridItemDecoration(largePadding, smallPadding));
 
         loadListProduct();
