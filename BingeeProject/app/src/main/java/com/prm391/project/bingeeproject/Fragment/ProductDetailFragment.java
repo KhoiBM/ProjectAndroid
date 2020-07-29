@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.prm391.project.bingeeproject.Adapter.GlideApp;
 import com.prm391.project.bingeeproject.Interface.NavigationHost;
 import com.prm391.project.bingeeproject.Utils.NavigationIconClickListener;
 import com.prm391.project.bingeeproject.Databases.CartDAO;
@@ -124,7 +125,7 @@ public class ProductDetailFragment extends Fragment implements View.OnClickListe
                     imagesRef = storageRef.child(snapshot.child("mImage").getValue(String.class));
 
                     if (getActivity()!=null) {
-                        Glide.with(getActivity()).load(imagesRef).into(productImage);
+                        GlideApp.with(getActivity()).load(imagesRef).into(productImage);
                     }
                 } else {
                     Utils.showSnackbarWithNoAction(getView(),"Product does not exist!");
