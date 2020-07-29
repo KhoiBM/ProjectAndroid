@@ -22,13 +22,13 @@ public class OnBoardingActivity extends AppCompatActivity {
 
     private static final String TAG = OnBoardingActivity.class.getSimpleName();
     private ActivityOnBoardingBinding mBinding;
-    LinearLayout dotsLayout;
-    ViewPager viewPager;
-    SliderAdapter sliderAdapter;
-    TextView[] dots;
-    Button letsGetStarted;
-    Animation animation;
-    int currentPos;
+    private LinearLayout dotsLayout;
+    private ViewPager viewPager;
+    private SliderAdapter sliderAdapter;
+    private TextView[] dots;
+    private Button letsGetStarted;
+    private Animation animation;
+    private int currentPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

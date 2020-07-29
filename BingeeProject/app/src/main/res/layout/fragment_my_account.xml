@@ -39,8 +39,8 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:layout_marginStart="@dimen/bin_product_grid_spacing"
-                android:layout_marginEnd="@dimen/bin_product_grid_spacing">
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
 
                 <RelativeLayout
                     android:id="@+id/rellay1"
@@ -68,7 +68,6 @@
                         android:layout_below="@+id/imgUser"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15sp"
-                        android:text="Text"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                         android:textColor="@color/white" />
                 </RelativeLayout>

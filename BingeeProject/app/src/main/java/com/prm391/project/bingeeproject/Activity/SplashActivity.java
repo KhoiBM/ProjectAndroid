@@ -20,10 +20,9 @@ import java.util.TimerTask;
 public class SplashActivity extends AppCompatActivity {
 
     private Timer timer;
-    ImageView ivLogo;
-    TextView tvBrandName;
-    Animation bottomAnim;
-    SharedPreferences onBoardingScreen;
+    private ImageView ivLogo;
+    private TextView tvBrandName;
+    private SharedPreferences onBoardingScreen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        setTheme(R.style.AppTheme);
@@ -36,9 +35,6 @@ public class SplashActivity extends AppCompatActivity {
 
         ivLogo=findViewById(R.id.ivLogo);
         tvBrandName=findViewById(R.id.tvBrandName);
-
-//        bottomAnim= AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
-//        tvBrandName.setAnimation(bottomAnim);
 
         ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(ivLogo, "scaleX", 0.6f);
         ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(ivLogo, "scaleY", 0.6f);

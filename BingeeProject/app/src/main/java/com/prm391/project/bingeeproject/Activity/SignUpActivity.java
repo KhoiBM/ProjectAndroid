@@ -34,9 +34,9 @@ import java.util.regex.Pattern;
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = SignUpActivity.class.getSimpleName();
-    TextInputLayout phoneNumber, fullName, password;
-    ImageView goBack;
-    LinearLayout layoutSignUp;
+    private TextInputLayout phoneNumber, fullName, password;
+    private ImageView goBack;
+    private LinearLayout layoutSignUp;
     private LoadingDialog loadingDialog;
     private ActivityRetailerSignUpBinding mSignUpBinding;
     private FirebaseDatabase mDatabase;
@@ -45,11 +45,11 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Transition fade = new Fade();
-        fade.excludeTarget(android.R.id.statusBarBackground, true);
-        fade.excludeTarget(android.R.id.navigationBarBackground, true);
-        getWindow().setExitTransition(fade);
-        getWindow().setEnterTransition(fade);
+//        Transition fade = new Fade();
+//        fade.excludeTarget(android.R.id.statusBarBackground, true);
+//        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+//        getWindow().setExitTransition(fade);
+//        getWindow().setEnterTransition(fade);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 

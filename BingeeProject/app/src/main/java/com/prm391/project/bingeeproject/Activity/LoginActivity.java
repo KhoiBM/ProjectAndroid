@@ -43,11 +43,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Transition fade = new Fade();
-        fade.excludeTarget(android.R.id.statusBarBackground, true);
-        fade.excludeTarget(android.R.id.navigationBarBackground, true);
-        getWindow().setExitTransition(fade);
-        getWindow().setEnterTransition(fade);
+//        Transition fade = new Fade();
+//        fade.excludeTarget(android.R.id.statusBarBackground, true);
+//        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+//        getWindow().setExitTransition(fade);
+//        getWindow().setEnterTransition(fade);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
